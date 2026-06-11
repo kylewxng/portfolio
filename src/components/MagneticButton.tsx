@@ -7,9 +7,11 @@ interface MagneticButtonProps {
   onClick?: () => void;
   accent?: boolean;
   href?: string;
+  icon?: boolean;
+  ariaLabel?: string;
 }
 
-export default function MagneticButton({ children, onClick, accent = false, href }: MagneticButtonProps) {
+export default function MagneticButton({ children, onClick, accent = false, href, icon = false, ariaLabel }: MagneticButtonProps) {
   const ref = useRef<HTMLButtonElement | HTMLAnchorElement>(null);
   const [offset, setOffset] = useState({ x: 0, y: 0 });
   const [hovered, setHovered] = useState(false);
@@ -23,7 +25,7 @@ export default function MagneticButton({ children, onClick, accent = false, href
     });
   };
 
-  const baseClass = `font-semibold text-sm px-9 py-3.5 rounded-full cursor-pointer inline-block text-center tracking-wide`;
+  const baseClass = `font-semibold text-sm rounded-full cursor-pointer inline-flex items-center justify-center text-center tracking-wide ${icon ? "p-4" : "px-9 py-3.5"}`;
 
   const style = {
     border: accent ? "none" : "1.5px solid #0078D4",
@@ -48,6 +50,8 @@ export default function MagneticButton({ children, onClick, accent = false, href
         href={href}
         target="_blank"
         rel="noopener noreferrer"
+        aria-label={ariaLabel}
+        title={ariaLabel}
         className={baseClass}
         style={style}
         onMouseMove={handleMove}
@@ -63,6 +67,8 @@ export default function MagneticButton({ children, onClick, accent = false, href
     <button
       ref={ref as React.RefObject<HTMLButtonElement>}
       onClick={onClick}
+      aria-label={ariaLabel}
+      title={ariaLabel}
       className={baseClass}
       style={style}
       onMouseMove={handleMove}

@@ -41,17 +41,26 @@ export default function TimelineItem({ exp, isLast }: TimelineItemProps) {
 
       {/* Logo */}
       <div className="shrink-0 mt-0.5">
-        <Image
-          src={exp.logo}
-          alt={exp.company}
-          width={40}
-          height={40}
-          className="rounded-lg object-contain"
-          style={{
-            filter: hovered ? "none" : "grayscale(0.3)",
-            transition: "filter 0.3s",
-          }}
-        />
+        {exp.logo ? (
+          <Image
+            src={exp.logo}
+            alt={exp.company}
+            width={40}
+            height={40}
+            className="rounded-lg object-contain"
+            style={{
+              filter: hovered ? "none" : "grayscale(0.3)",
+              transition: "filter 0.3s",
+            }}
+          />
+        ) : (
+          <div
+            className="w-10 h-10 rounded-lg flex items-center justify-center text-[15px] font-bold text-[#0078D4] bg-[rgba(0,120,212,0.08)] border border-[rgba(0,120,212,0.15)]"
+            style={{ transition: "all 0.3s" }}
+          >
+            {exp.company.charAt(0)}
+          </div>
+        )}
       </div>
 
       {/* Content */}

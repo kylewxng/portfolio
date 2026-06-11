@@ -121,25 +121,27 @@ export default function ProjectCard({ project, index, isExpanded, onClick }: Pro
             }}
           >
             {/* Screenshot */}
-            <div
-              className={`mt-5 mb-5 rounded-xl overflow-hidden border border-[#E8EDF2] ${isMobile ? "bg-transparent flex justify-center" : "bg-[#f0f2f5]"}`}
-            >
-              <Image
-                src={project.image}
-                alt={`${project.title} screenshot`}
-                width={isMobile ? 200 : 800}
-                height={isMobile ? 400 : 500}
-                className="block"
-                style={{
-                  width: isMobile ? "auto" : "100%",
-                  height: isMobile ? "auto" : "auto",
-                  maxHeight: isMobile ? 400 : undefined,
-                  objectFit: isMobile ? "contain" : "contain",
-                  objectPosition: "top",
-                  marginTop: cropTop ? -5 : undefined,
-                }}
-              />
-            </div>
+            {project.image && (
+              <div
+                className={`mt-5 mb-5 rounded-xl overflow-hidden border border-[#E8EDF2] ${isMobile ? "bg-transparent flex justify-center" : "bg-[#f0f2f5]"}`}
+              >
+                <Image
+                  src={project.image}
+                  alt={`${project.title} screenshot`}
+                  width={isMobile ? 200 : 800}
+                  height={isMobile ? 400 : 500}
+                  className="block"
+                  style={{
+                    width: isMobile ? "auto" : "100%",
+                    height: isMobile ? "auto" : "auto",
+                    maxHeight: isMobile ? 400 : undefined,
+                    objectFit: isMobile ? "contain" : "contain",
+                    objectPosition: "top",
+                    marginTop: cropTop ? -5 : undefined,
+                  }}
+                />
+              </div>
+            )}
 
             <p className="text-sm text-[#4A5568] leading-7 mb-5">
               {project.description}

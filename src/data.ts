@@ -8,7 +8,7 @@ export interface Project {
   org: string;
   highlight: string;
   year: string;
-  image: string;
+  image?: string;
 }
 
 export interface Experience {
@@ -16,7 +16,7 @@ export interface Experience {
   company: string;
   period: string;
   status: "upcoming" | "current" | "past";
-  logo: string;
+  logo?: string;
 }
 
 export interface TechItem {
@@ -25,6 +25,32 @@ export interface TechItem {
 }
 
 export const PROJECTS: Project[] = [
+  {
+    id: "courtex",
+    title: "Courtex",
+    subtitle: "RAG-Powered NBA Play Analysis",
+    tags: ["Python", "RAG", "Semantic Search", "OpenAI", "NBA Play-by-Play"],
+    description:
+      "A retrieval-augmented system for exploring NBA play-by-play data through natural language. Ask a question like \"where does Doncic shoot\" and Courtex semantically retrieves the most relevant plays, then generates a written, scouting-style analysis of shot locations, tendencies, and efficiency.",
+    role: "Creator & Developer",
+    org: "Personal Project",
+    highlight: "RAG Pipeline · Sports Analytics",
+    year: "2026",
+    image: "/projects/courtex.png",
+  },
+  {
+    id: "tappedin",
+    title: "TappedIn",
+    subtitle: "Vibe-Based Event Discovery",
+    tags: ["React", "Vite", "TypeScript", "FastAPI", "Supabase", "Pinecone", "OpenAI"],
+    description:
+      "An event discovery platform that turns a natural-language \"vibe\" into tailored recommendations. Users describe what they're in the mood for and TappedIn surfaces matching local events using semantic search over OpenAI embeddings and a Pinecone vector index, plus a personalized \"For You\" agent. Built on a React + Vite frontend and a FastAPI backend with Supabase and JWT auth.",
+    role: "Software Developer",
+    org: "Creative Labs",
+    highlight: "Full-Stack · Semantic Search",
+    year: "2026",
+    image: "/projects/tappedin.png",
+  },
   {
     id: "realy",
     title: "Realy",
@@ -36,7 +62,7 @@ export const PROJECTS: Project[] = [
     org: "UCLA Trustworthy AI Lab",
     highlight: "Research Tool · In Production",
     year: "2026",
-    image: "/projects/realy.png",
+    image: "/projects/realy-v2.png",
   },
   {
     id: "hoops",
@@ -97,15 +123,22 @@ export const EXPERIENCE: Experience[] = [
     role: "Data Analyst Intern",
     company: "Pacific Life",
     period: "Summer 2026",
-    status: "upcoming",
+    status: "current",
     logo: "/logos/pacificlife.png",
   },
   {
-    role: "Undergraduate Researcher — Frontend Engineer",
+    role: "Undergraduate Researcher",
     company: "UCLA Trustworthy AI Lab",
     period: "2026 – Present",
     status: "current",
     logo: "/logos/ucla.png",
+  },
+  {
+    role: "Software Developer",
+    company: "Creative Labs",
+    period: "2026",
+    status: "past",
+    logo: "/logos/creativelabs.png",
   },
   {
     role: "ML Fellow — AI Studio",
@@ -148,10 +181,6 @@ export const TECH_LOGOS: Record<string, TechItem[]> = {
       logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vercel/vercel-original.svg",
     },
     {
-      name: "Firebase",
-      logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/firebase/firebase-original.svg",
-    },
-    {
       name: "Supabase",
       logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/supabase/supabase-original.svg",
     },
@@ -162,6 +191,14 @@ export const TECH_LOGOS: Record<string, TechItem[]> = {
     {
       name: "Tableau",
       logo: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Cpath d='M24 4v8h-8v4h8v8h4v-8h8v-4h-8V4h-4z' fill='%23E97627'/%3E%3Cpath d='M12 18v6H6v3h6v6h3v-6h6v-3h-6v-6h-3z' fill='%234E79A7'/%3E%3Cpath d='M33 18v6h-6v3h6v6h3v-6h6v-3h-6v-6h-3z' fill='%234E79A7'/%3E%3Cpath d='M24 30v6h-6v3h6v6h3v-6h6v-3h-6v-6h-3z' fill='%236BAA75'/%3E%3C/svg%3E",
+    },
+    {
+      name: "AWS",
+      logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/amazonwebservices/amazonwebservices-original-wordmark.svg",
+    },
+    {
+      name: "FastAPI",
+      logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/fastapi/fastapi-original.svg",
     },
   ],
 };

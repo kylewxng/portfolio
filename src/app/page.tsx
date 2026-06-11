@@ -15,12 +15,11 @@ import FadeIn from "@/components/FadeIn";
 const MARQUEE_ITEMS = [
   "Machine Learning",
   "Data Science",
-  "React.js",
+  "Software Development",
   "Computer Vision",
   "Data Analytics",
   "NLP",
   "PyTorch",
-  "Next.js",
   "Data Visualization",
 ];
 
@@ -46,7 +45,10 @@ export default function Portfolio() {
         const el = document.getElementById(s);
         if (el) {
           const r = el.getBoundingClientRect();
-          if (r.top <= window.innerHeight / 2 && r.bottom > window.innerHeight / 2) {
+          if (
+            r.top <= window.innerHeight / 2 &&
+            r.bottom > window.innerHeight / 2
+          ) {
             setActiveSection(s);
             break;
           }
@@ -86,18 +88,23 @@ export default function Portfolio() {
                 transition: "all 1s cubic-bezier(.16,1,.3,1) 0.2s",
               }}
             >
-              <div className="text-[13px] text-[#0078D4] tracking-[0.18em] uppercase mb-7 flex items-center gap-3 font-semibold">
-                <div
-                  className="w-10 h-0.5"
-                  style={{
-                    background: "linear-gradient(90deg, #0078D4, #00A6FB)",
-                    animation: loaded
-                      ? "lineGrow 0.8s cubic-bezier(.16,1,.3,1) 0.5s both"
-                      : "none",
-                    transformOrigin: "left",
-                  }}
-                />
-                Statistics & Data Science · UCLA &apos;27
+              <div className="mb-7">
+                <div className="text-[13px] text-[#0078D4] tracking-[0.18em] uppercase flex items-center gap-3 font-semibold">
+                  <div
+                    className="w-10 h-0.5"
+                    style={{
+                      background: "linear-gradient(90deg, #0078D4, #00A6FB)",
+                      animation: loaded
+                        ? "lineGrow 0.8s cubic-bezier(.16,1,.3,1) 0.5s both"
+                        : "none",
+                      transformOrigin: "left",
+                    }}
+                  />
+                  Statistics & Data Science · UCLA &apos;27
+                </div>
+                <div className="text-[12px] text-[#9BA8B4] tracking-[0.14em] uppercase mt-2.5 ml-13 font-medium">
+                  Minor in Data Science Engineering
+                </div>
               </div>
             </div>
 
@@ -143,9 +150,9 @@ export default function Portfolio() {
               }}
             >
               <p className="text-[19px] text-[#6B7B8D] max-w-[560px] leading-relaxed font-light">
-                ML engineer, frontend developer, and data scientist building
-                intelligent tools, from NBA prediction engines to agentic AI
-                research platforms.
+                Data Scientist, Data Analyst, and software developer building
+                tools, from RAG-Powered NBA Play Analysis to agentic AI research
+                platforms.
               </p>
             </div>
 
@@ -228,20 +235,14 @@ export default function Portfolio() {
           <div className="max-w-[760px]">
             {EXPERIENCE.map((exp, i) => (
               <FadeIn key={i} delay={i * 0.08}>
-                <TimelineItem
-                  exp={exp}
-                  isLast={i === EXPERIENCE.length - 1}
-                />
+                <TimelineItem exp={exp} isLast={i === EXPERIENCE.length - 1} />
               </FadeIn>
             ))}
           </div>
         </section>
 
         {/* ═══════ SKILLS ═══════ */}
-        <section
-          id="skills"
-          className="py-[120px] px-[clamp(32px,10vw,140px)]"
-        >
+        <section id="skills" className="py-[120px] px-[clamp(32px,10vw,140px)]">
           <SectionHeader num="04" label="Skills" title="Tech Stack" />
           <div className="max-w-[900px]">
             {Object.entries(TECH_LOGOS).map(([category, items], ci) => (
@@ -275,14 +276,52 @@ export default function Portfolio() {
           </FadeIn>
           <FadeIn delay={0.15}>
             <div className="flex gap-4 flex-wrap">
-              <MagneticButton href="https://linkedin.com/in/kylewxng">
-                LinkedIn ↗
+              <MagneticButton
+                href="https://linkedin.com/in/kylewxng"
+                icon
+                ariaLabel="LinkedIn"
+              >
+                <svg
+                  className="w-5 h-5"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                  aria-hidden="true"
+                >
+                  <path d="M20.45 20.45h-3.56v-5.57c0-1.33-.03-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.94v5.67H9.34V9h3.42v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.07 2.07 0 1 1 0-4.13 2.07 2.07 0 0 1 0 4.13zm1.78 13.02H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z" />
+                </svg>
               </MagneticButton>
-              <MagneticButton href="https://github.com/kylewxng">
-                GitHub ↗
+              <MagneticButton
+                href="https://github.com/kylewxng"
+                icon
+                ariaLabel="GitHub"
+              >
+                <svg
+                  className="w-5 h-5"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                  aria-hidden="true"
+                >
+                  <path d="M12 .5C5.37.5 0 5.78 0 12.29c0 5.2 3.44 9.6 8.21 11.16.6.11.82-.25.82-.56 0-.28-.01-1.02-.02-2-3.34.71-4.04-1.59-4.04-1.59-.55-1.37-1.33-1.74-1.33-1.74-1.09-.73.08-.72.08-.72 1.2.08 1.84 1.21 1.84 1.21 1.07 1.8 2.81 1.28 3.5.98.11-.76.42-1.28.76-1.57-2.67-.3-5.47-1.31-5.47-5.84 0-1.29.47-2.34 1.24-3.17-.13-.3-.54-1.52.12-3.16 0 0 1.01-.32 3.3 1.21a11.6 11.6 0 0 1 6 0c2.29-1.53 3.3-1.21 3.3-1.21.66 1.64.24 2.86.12 3.16.77.83 1.23 1.88 1.23 3.17 0 4.54-2.81 5.53-5.49 5.83.43.36.81 1.08.81 2.18 0 1.57-.01 2.84-.01 3.23 0 .31.21.68.83.56A12.02 12.02 0 0 0 24 12.29C24 5.78 18.63.5 12 .5z" />
+                </svg>
               </MagneticButton>
-              <MagneticButton href="mailto:kylewxng06@gmail.com">
-                Email ↗
+              <MagneticButton
+                href="mailto:kylewxng06@gmail.com"
+                icon
+                ariaLabel="Email"
+              >
+                <svg
+                  className="w-5 h-5"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth={2}
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  aria-hidden="true"
+                >
+                  <rect x="2" y="4" width="20" height="16" rx="2" />
+                  <path d="m22 6-10 7L2 6" />
+                </svg>
               </MagneticButton>
             </div>
           </FadeIn>
