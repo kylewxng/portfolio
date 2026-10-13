@@ -1,8 +1,7 @@
 "use client";
 
 import { KeyboardEvent, useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { NAV_SECTIONS, PROJECTS, SITE, TRACKS } from "@/data";
-import { useLens } from "./Lens";
+import { NAV_SECTIONS, PROJECTS, SITE } from "@/data";
 import { toggleTheme } from "./ThemeToggle";
 
 interface Command {
@@ -23,7 +22,6 @@ export default function CommandPalette() {
   const [toast, setToast] = useState<string | null>(null);
   const [isMac, setIsMac] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
-  const { setLens } = useLens();
 
   const flash = (msg: string) => {
     setToast(msg);
@@ -31,7 +29,6 @@ export default function CommandPalette() {
   };
 
   const commands = useMemo<Command[]>(() => {
-    const lensLabel = (label: string) => (label === "Everything" ? "Show everything" : `View as ${label}`);
     return [
       ...NAV_SECTIONS.map((s, i) => ({
         id: `go-${s.id}`,
@@ -39,15 +36,6 @@ export default function CommandPalette() {
         label: s.label,
         hint: String(i + 1).padStart(2, "0"),
         run: () => go(s.id),
-      })),
-      ...TRACKS.map((t) => ({
-        id: `lens-${t.id}`,
-        group: "Lens",
-        label: lensLabel(t.label),
-        run: () => {
-          setLens(t.id);
-          go("experience");
-        },
       })),
       {
         id: "copy-email",
@@ -70,7 +58,7 @@ export default function CommandPalette() {
         })),
       ),
     ];
-  }, [setLens]);
+  }, []);
 
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
@@ -157,7 +145,7 @@ export default function CommandPalette() {
                   setQuery(e.target.value);
                   setIndex(0);
                 }}
-                placeholder="Jump to a section, switch lens, copy email…"
+                placeholder="Jump to a section, copy email, open a link…"
                 aria-label="Search commands"
                 aria-controls="command-list"
                 aria-activedescendant={filtered[index] ? `cmd-${filtered[index].id}` : undefined}

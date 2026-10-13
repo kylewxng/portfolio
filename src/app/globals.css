@@ -168,17 +168,6 @@ body {
   opacity: 1;
 }
 
-/* Lens filter: items outside the selected track fade back */
-.lens-item {
-  transition:
-    opacity 0.35s ease,
-    filter 0.35s ease;
-}
-.lens-item[data-dim="true"] {
-  opacity: 0.3;
-  filter: saturate(0.3);
-}
-
 /* Rotating hero word */
 @keyframes word-in {
   from {

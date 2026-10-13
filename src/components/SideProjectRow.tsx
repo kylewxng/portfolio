@@ -1,17 +1,10 @@
-"use client";
-
 import Image from "next/image";
 import type { SideProject } from "@/data";
 import Rich from "./Rich";
-import { useDimmed } from "./Lens";
 
 export default function SideProjectRow({ project }: { project: SideProject }) {
-  const dimmed = useDimmed(project.tracks);
-
   return (
-    <article
-      data-dim={dimmed}
-      className="lens-item group grid gap-5 border-t border-border py-6 sm:grid-cols-[168px_1fr_auto] sm:items-start"
+    <article className="group grid gap-5 border-t border-border py-6 sm:grid-cols-[168px_1fr_auto] sm:items-start"
     >
       <div className="relative aspect-16/10 overflow-hidden rounded-md border border-border bg-surface-2 transition-colors group-hover:border-cf-300">
         <Image

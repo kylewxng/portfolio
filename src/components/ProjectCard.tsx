@@ -1,21 +1,16 @@
-"use client";
-
 import Image from "next/image";
 import type { Project } from "@/data";
 import Chips from "./Chips";
 import Rich from "./Rich";
 import Spotlight from "./Spotlight";
-import { useDimmed } from "./Lens";
 import { ArrowUpRight } from "./icons";
 
 export default function ProjectCard({ project }: { project: Project }) {
   const phone = project.imageKind === "phone";
-  const dimmed = useDimmed(project.tracks);
 
   return (
     <Spotlight
-      data-dim={dimmed}
-      className="lens-item group h-full overflow-hidden rounded-xl border border-border bg-surface transition-[border-color,box-shadow,transform] duration-300 hover:-translate-y-1 hover:border-cf-300 hover:shadow-[0_18px_50px_-20px_var(--cf-400)]"
+      className="group h-full overflow-hidden rounded-xl border border-border bg-surface transition-[border-color,box-shadow,transform] duration-300 hover:-translate-y-1 hover:border-cf-300 hover:shadow-[0_18px_50px_-20px_var(--cf-400)]"
     >
       <article className="flex h-full flex-col">
         <div className="relative aspect-16/10 overflow-hidden border-b border-border bg-surface-2">

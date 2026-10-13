@@ -22,7 +22,6 @@ import CountUp from "@/components/CountUp";
 import LocalTime from "@/components/LocalTime";
 import RotatingWords from "@/components/RotatingWords";
 import Spotlight from "@/components/Spotlight";
-import { LensControl, LensProvider } from "@/components/Lens";
 import { ArrowDown, ArrowUpRight, GitHubIcon, LinkedInIcon } from "@/components/icons";
 
 const CONTACT_ROWS = [
@@ -33,7 +32,7 @@ const CONTACT_ROWS = [
 
 export default function Portfolio() {
   return (
-    <LensProvider>
+    <>
       <Nav />
       <CommandPalette />
 
@@ -244,11 +243,8 @@ export default function Portfolio() {
           num="02"
           label="Experience"
           title="Where I’ve worked"
-          intro="Most recent first. Pick a lens to highlight the work most relevant to the role you’re hiring for."
+          intro="Most recent first: internships, research, and client work across Data Science, ML, and Product."
         >
-          <Reveal className="mb-8">
-            <LensControl />
-          </Reveal>
           <div className="border-b border-border">
             {EXPERIENCE.map((exp) => (
               <Reveal key={exp.id}>
@@ -266,9 +262,6 @@ export default function Portfolio() {
           title="Selected work"
           intro="Things I’ve built end to end, from retrieval pipelines to the interface people actually touch."
         >
-          <Reveal className="mb-8">
-            <LensControl />
-          </Reveal>
           <div className="grid gap-6 md:grid-cols-2">
             {PROJECTS.map((p, i) => (
               <Reveal key={p.id} delay={(i % 2) * 0.08} className="h-full">
@@ -377,6 +370,6 @@ export default function Portfolio() {
           Back to top ↑
         </a>
       </footer>
-    </LensProvider>
+    </>
   );
 }

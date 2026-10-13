@@ -9,22 +9,6 @@ export const SITE = {
   location: "Los Angeles, CA",
 };
 
-/** Lenses a visitor can view the work through. */
-export type Track = "product" | "data" | "ml";
-
-export const TRACKS: { id: Track | "all"; label: string }[] = [
-  { id: "all", label: "Everything" },
-  { id: "product", label: "Product" },
-  { id: "data", label: "Data Science" },
-  { id: "ml", label: "ML / AI" },
-];
-
-export interface Bullet {
-  /** rich */
-  text: string;
-  tracks: Track[];
-}
-
 export interface Experience {
   id: string;
   role: string;
@@ -35,7 +19,8 @@ export interface Experience {
   start: string;
   end: string;
   summary: string;
-  bullets: Bullet[];
+  /** rich */
+  bullets: string[];
   stack: string[];
   logo?: string;
 }
@@ -51,7 +36,6 @@ export interface Project {
   /** rich */
   highlights: string[];
   stack: string[];
-  tracks: Track[];
   image: string;
   /** "phone" screenshots are letterboxed instead of cropped */
   imageKind?: "screen" | "phone";
@@ -64,7 +48,6 @@ export interface SideProject {
   /** rich */
   summary: string;
   stack: string[];
-  tracks: Track[];
   year: string;
   award?: string;
   image: string;
@@ -97,20 +80,17 @@ export const PROFILE: { label: string; value: string }[] = [
   { label: "Based in", value: "Los Angeles, CA" },
 ];
 
-export const PILLARS: { title: string; track: Track; body: string }[] = [
+export const PILLARS = [
   {
     title: "Data Science & analytics",
-    track: "data",
     body: "SQL, dbt and Snowflake pipelines, experiment design, regression, and dashboards that answer the question someone actually asked.",
   },
   {
     title: "ML & AI",
-    track: "ml",
     body: "LLM agents, RAG, text-to-SQL, anomaly detection, and NLP. Evaluated against real analyst work, not just demos.",
   },
   {
     title: "Product",
-    track: "product",
     body: "Writing PRDs, scoping with stakeholders and researchers, leading teams, and shipping the interface people use every day.",
   },
 ];
@@ -140,22 +120,10 @@ export const EXPERIENCE: Experience[] = [
     end: "Sep 2026",
     summary: "Built AI investigation tooling for the fraud analytics team.",
     bullets: [
-      {
-        text: "Built a **Snowflake Cortex text-to-SQL agent** that lets fraud analysts self-serve queries across **1.6M policies**",
-        tracks: ["ml", "data", "product"],
-      },
-      {
-        text: "Launched a **multi-agent** Snowflake CoWork workflow over **4M+ call transcripts**, routing cases to web-activity and transcript subagents and cutting manual case review time by **~80%**",
-        tracks: ["ml", "product"],
-      },
-      {
-        text: "Benchmarked **4** fraud detection approaches and recommended a rules + Isolation Forest ensemble that flags the **top 1%** of synthetic accounts for review",
-        tracks: ["data", "ml"],
-      },
-      {
-        text: "Extended production **dbt Cloud** models with **5** new fields, and added dbt tests that check agent SQL against analyst-written queries",
-        tracks: ["data"],
-      },
+      "Built a **Snowflake Cortex text-to-SQL agent** that lets fraud analysts self-serve queries across **1.6M policies**",
+      "Launched a **multi-agent** Snowflake CoWork workflow over **4M+ call transcripts**, routing cases to web-activity and transcript subagents and cutting manual case review time by **~80%**",
+      "Benchmarked **4** fraud detection approaches and recommended a rules + Isolation Forest ensemble that flags the **top 1%** of synthetic accounts for review",
+      "Extended production **dbt Cloud** models with **5** new fields, and added dbt tests that check agent SQL against analyst-written queries",
     ],
     stack: ["Snowflake Cortex", "dbt Cloud", "SQL", "Python", "Isolation Forest", "LLM agents"],
     logo: "/logos/pacificlife.png",
@@ -169,22 +137,10 @@ export const EXPERIENCE: Experience[] = [
     end: "Jul 2026",
     summary: "Frontend lead on Realy, a LangGraph agent that answers questions across linked tables.",
     bullets: [
-      {
-        text: "Wrote the **PRD** with PhD researchers, defining requirements and scope for the agent’s client",
-        tracks: ["product"],
-      },
-      {
-        text: "Built the **Next.js + TypeScript** client from scratch, shipping **10+ features in 8 weeks** with streaming, multi-step agent state",
-        tracks: ["product", "ml"],
-      },
-      {
-        text: "Diagnosed generated-SQL failure modes across linked-table schemas and prioritized multi-table join fixes with the research team",
-        tracks: ["ml", "data"],
-      },
-      {
-        text: "Shipped a **cost-tracking dashboard** and schema visualizer for per-query visibility into retrieval and token spend",
-        tracks: ["product", "data"],
-      },
+      "Wrote the **PRD** with PhD researchers, defining requirements and scope for the agent’s client",
+      "Built the **Next.js + TypeScript** client from scratch, shipping **10+ features in 8 weeks** with streaming, multi-step agent state",
+      "Diagnosed generated-SQL failure modes across linked-table schemas and prioritized multi-table join fixes with the research team",
+      "Shipped a **cost-tracking dashboard** and schema visualizer for per-query visibility into retrieval and token spend",
     ],
     stack: ["Next.js", "TypeScript", "LangGraph", "RAG", "Supabase"],
     logo: "/logos/ucla.png",
@@ -198,14 +154,8 @@ export const EXPERIENCE: Experience[] = [
     end: "Jul 2026",
     summary: "Led TappedIn, an LLM-powered event recommender for LA.",
     bullets: [
-      {
-        text: "Led an **11-person team** building TappedIn, which lets people search LA pop-ups in plain English by interest, budget, timing, and mood",
-        tracks: ["product"],
-      },
-      {
-        text: "Surfaced **200+** Instagram and Eventbrite events through a Supabase-backed LLM recommendation pipeline",
-        tracks: ["ml", "product"],
-      },
+      "Led an **11-person team** building TappedIn, which lets people search LA pop-ups in plain English by interest, budget, timing, and mood",
+      "Surfaced **200+** Instagram and Eventbrite events through a Supabase-backed LLM recommendation pipeline",
     ],
     stack: ["React", "TypeScript", "Supabase", "OpenAI", "LangChain"],
     logo: "/logos/creativelabs.png",
@@ -220,18 +170,9 @@ export const EXPERIENCE: Experience[] = [
     end: "Dec 2025",
     summary: "Four-month client engagement with a NYC dermatology-tech startup, turning customer reviews into product decisions.",
     bullets: [
-      {
-        text: "Segmented **1,000+** Sephora reviews across **300+** products with an NLP pipeline (TF-IDF, K-means) and sentiment scoring",
-        tracks: ["ml", "data"],
-      },
-      {
-        text: "Turned clusters into customer personas and **Tableau** dashboards the founders used to prioritize product coverage",
-        tracks: ["data", "product"],
-      },
-      {
-        text: "Presented findings to the founders with a **5-person** team, helping lift engagement by **~20–30%**",
-        tracks: ["product"],
-      },
+      "Segmented **1,000+** Sephora reviews across **300+** products with an NLP pipeline (TF-IDF, K-means) and sentiment scoring",
+      "Turned clusters into customer personas and **Tableau** dashboards the founders used to prioritize product coverage",
+      "Presented findings to the founders with a **5-person** team, helping lift engagement by **~20–30%**",
     ],
     stack: ["Python", "scikit-learn", "NLTK", "Tableau", "NLP"],
     logo: "/logos/skinterest.png",
@@ -253,7 +194,6 @@ export const PROJECTS: Project[] = [
       "Containerized with Docker and deployed on **AWS Lambda + ECR**",
     ],
     stack: ["Python", "FastAPI", "pgvector", "Llama 3.3", "Docker", "AWS Lambda", "React"],
-    tracks: ["ml", "data"],
     image: "/projects/courtex.png",
     links: [{ label: "Live demo", href: "https://courtex.vercel.app" }],
   },
@@ -271,7 +211,6 @@ export const PROJECTS: Project[] = [
       "Cost dashboard exposing **per-query token spend**",
     ],
     stack: ["Next.js", "TypeScript", "LangGraph", "Supabase", "Tailwind"],
-    tracks: ["product", "ml"],
     image: "/projects/realy-v2.png",
   },
   {
@@ -287,7 +226,6 @@ export const PROJECTS: Project[] = [
       "Ranks **200+** scraped events by interest, budget, timing, and mood",
     ],
     stack: ["React", "TypeScript", "FastAPI", "Supabase", "Pinecone", "OpenAI"],
-    tracks: ["product", "ml"],
     image: "/projects/tappedin.png",
   },
   {
@@ -305,7 +243,6 @@ export const PROJECTS: Project[] = [
       "Built the Gemini matching and the **Expo React Native** app",
     ],
     stack: ["Python", "YOLOv8", "Gemini", "Flask", "React Native", "Raspberry Pi"],
-    tracks: ["ml", "product"],
     image: "/projects/scenetic.png",
     imageKind: "phone",
     links: [{ label: "Code", href: "https://github.com/kylewxng/scenetic" }],
@@ -319,7 +256,6 @@ export const SIDE_PROJECTS: SideProject[] = [
     summary:
       "Predicts NBA player points, rebounds, and assists with XGBoost on **16+** engineered features: rolling averages, matchup history, and rest days.",
     stack: ["Python", "XGBoost", "scikit-learn", "Streamlit"],
-    tracks: ["ml", "data"],
     year: "2026",
     image: "/projects/hoops.png",
   },
@@ -329,7 +265,6 @@ export const SIDE_PROJECTS: SideProject[] = [
     summary:
       "Helps California community college students plan transfers to all **9** UCs. Designed a 9-collection Firestore schema for course articulations and major requirements.",
     stack: ["React", "Tailwind", "Firebase", "Figma"],
-    tracks: ["product"],
     year: "2025",
     image: "/projects/transfermate.png",
   },
@@ -339,7 +274,6 @@ export const SIDE_PROJECTS: SideProject[] = [
     summary:
       "Upload a photo of a plant and get a Gemini-generated health score, diagnosis, and care feedback, tracked over time.",
     stack: ["Flask", "JavaScript", "Gemini", "Firebase"],
-    tracks: ["ml", "product"],
     year: "2025",
     award: "3rd place AgTech · HackMerced X",
     image: "/projects/plantpulse.png",
