@@ -1,9 +1,11 @@
 "use client";
 
-import { useState, useEffect, useRef, MutableRefObject } from "react";
+import { useState, useEffect, useRef, RefObject } from "react";
 
-export function useInView(threshold = 0.12): [MutableRefObject<HTMLDivElement | null>, boolean] {
-  const ref = useRef<HTMLDivElement | null>(null);
+export function useInView<T extends Element = HTMLDivElement>(
+  threshold = 0.12,
+): [RefObject<T | null>, boolean] {
+  const ref = useRef<T | null>(null);
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
@@ -16,25 +18,11 @@ export function useInView(threshold = 0.12): [MutableRefObject<HTMLDivElement | 
           obs.disconnect();
         }
       },
-      { threshold }
+      { threshold, rootMargin: "0px 0px -40px 0px" },
     );
     obs.observe(el);
     return () => obs.disconnect();
   }, [threshold]);
 
   return [ref, visible];
-}
-
-export function useMouse(): MutableRefObject<{ x: number; y: number }> {
-  const pos = useRef({ x: 0, y: 0 });
-
-  useEffect(() => {
-    const h = (e: MouseEvent) => {
-      pos.current = { x: e.clientX, y: e.clientY };
-    };
-    window.addEventListener("mousemove", h);
-    return () => window.removeEventListener("mousemove", h);
-  }, []);
-
-  return pos;
 }

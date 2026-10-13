@@ -1,47 +1,233 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
+/* Cornflower blue scale (#6495ED at 400) */
+:root {
+  --cf-50: #f0f5fe;
+  --cf-100: #dee8fc;
+  --cf-200: #c2d4f8;
+  --cf-300: #98b7f3;
+  --cf-400: #6495ed;
+  --cf-500: #4c7fe4;
+  --cf-600: #3566d1;
+  --cf-700: #2c52aa;
+  --cf-800: #284787;
+  --cf-900: #1f3360;
+
+  --bg: #f7f8fb;
+  --surface: #ffffff;
+  --surface-2: #f0f3f9;
+  --fg: #0f1420;
+  --muted: #4f5869;
+  --subtle: #868fa1;
+  --border: #e2e7f0;
+  --border-strong: #c8d1e1;
+  --accent: var(--cf-600);
+  --cornflower: var(--cf-400);
+  --accent-soft: rgba(100, 149, 237, 0.12);
+  --ok: #15803d;
+  color-scheme: light;
+}
+
+[data-theme="dark"] {
+  --bg: #0a0c11;
+  --surface: #10131a;
+  --surface-2: #161a23;
+  --fg: #e9edf5;
+  --muted: #a3abbb;
+  --subtle: #6b7386;
+  --border: #212737;
+  --border-strong: #323b50;
+  --accent: var(--cf-300);
+  --cornflower: var(--cf-400);
+  --accent-soft: rgba(100, 149, 237, 0.16);
+  --ok: #4ade80;
+  color-scheme: dark;
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-fg: var(--fg);
+  --color-muted: var(--muted);
+  --color-subtle: var(--subtle);
+  --color-border: var(--border);
+  --color-border-strong: var(--border-strong);
+  --color-accent: var(--accent);
+  --color-accent-soft: var(--accent-soft);
+  --color-cornflower: var(--cornflower);
+  --color-cf-50: var(--cf-50);
+  --color-cf-100: var(--cf-100);
+  --color-cf-200: var(--cf-200);
+  --color-cf-300: var(--cf-300);
+  --color-cf-400: var(--cf-400);
+  --color-cf-500: var(--cf-500);
+  --color-cf-600: var(--cf-600);
+  --color-cf-700: var(--cf-700);
+  --color-cf-800: var(--cf-800);
+  --color-cf-900: var(--cf-900);
+  --color-ok: var(--ok);
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: 5rem;
+}
+
+body {
+  background: var(--bg);
+  color: var(--fg);
 }
 
 ::selection {
-  background: #0078D4;
+  background: var(--cf-400);
   color: #fff;
 }
 
-::-webkit-scrollbar {
-  width: 5px;
-}
-::-webkit-scrollbar-track {
-  background: #F8FAFC;
-}
-::-webkit-scrollbar-thumb {
-  background: #0078D4;
-  border-radius: 10px;
+/* Faint grid behind the hero */
+.grid-bg {
+  background-image:
+    linear-gradient(to right, var(--border) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--border) 1px, transparent 1px);
+  background-size: 48px 48px;
+  mask-image: radial-gradient(ellipse 70% 60% at 50% 0%, #000 40%, transparent 100%);
 }
 
-@keyframes blobFloat {
-  0%, 100% { transform: translate(0, 0) scale(1); }
-  33% { transform: translate(30px, -30px) scale(1.05); }
-  66% { transform: translate(-20px, 20px) scale(0.95); }
+/* Entrance animation for above-the-fold content */
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.rise {
+  animation: rise 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
-@keyframes barShimmer {
-  0% { background-position: -200% 0; }
-  100% { background-position: 200% 0; }
+/* Scroll-triggered reveal, toggled by <Reveal> */
+.js .reveal {
+  opacity: 0;
+  transform: translateY(16px);
+  transition:
+    opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.js .reveal[data-visible="true"] {
+  opacity: 1;
+  transform: none;
 }
 
-@keyframes lineGrow {
-  from { transform: scaleX(0); }
-  to { transform: scaleX(1); }
+@keyframes pulse-dot {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 color-mix(in srgb, var(--ok) 45%, transparent);
+  }
+  50% {
+    box-shadow: 0 0 0 5px transparent;
+  }
+}
+.status-dot {
+  animation: pulse-dot 2.4s ease-in-out infinite;
 }
 
-@keyframes marquee {
-  from { transform: translateX(0); }
-  to { transform: translateX(-50%); }
+/* Cornflower glow behind the hero */
+.hero-glow {
+  background:
+    radial-gradient(40% 50% at 78% 18%, color-mix(in srgb, var(--cf-400) 22%, transparent), transparent 70%),
+    radial-gradient(35% 45% at 10% 70%, color-mix(in srgb, var(--cf-300) 14%, transparent), transparent 70%);
 }
 
-@keyframes scrollBounce {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(6px); }
+/* Cursor-following glow, driven by --mx / --my from <Spotlight> */
+.spotlight {
+  position: relative;
+}
+.spotlight::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s;
+  background: radial-gradient(
+    380px circle at var(--mx, 50%) var(--my, 50%),
+    color-mix(in srgb, var(--cornflower) 13%, transparent),
+    transparent 65%
+  );
+}
+.spotlight:hover::before {
+  opacity: 1;
+}
+
+/* Lens filter: items outside the selected track fade back */
+.lens-item {
+  transition:
+    opacity 0.35s ease,
+    filter 0.35s ease;
+}
+.lens-item[data-dim="true"] {
+  opacity: 0.3;
+  filter: saturate(0.3);
+}
+
+/* Rotating hero word */
+@keyframes word-in {
+  from {
+    opacity: 0;
+    transform: translateY(0.45em);
+    filter: blur(4px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+    filter: none;
+  }
+}
+.word-in {
+  display: inline-block;
+  animation: word-in 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes pop-in {
+  from {
+    opacity: 0;
+    transform: translateY(-8px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .rise,
+  .status-dot,
+  .word-in {
+    animation: none;
+  }
+  .js .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
 }
