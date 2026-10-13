@@ -1,206 +1,331 @@
-export interface Project {
-  id: string;
-  title: string;
-  subtitle: string;
-  tags: string[];
-  description: string;
-  role: string;
-  org: string;
-  highlight: string;
-  year: string;
-  image?: string;
-}
+// Text fields marked "rich" support **bold** for emphasizing metrics.
+
+export const SITE = {
+  name: "Kyle Wong",
+  url: "https://kyle-wong-portfolio.vercel.app",
+  email: "kylewxng06@gmail.com",
+  linkedin: "https://linkedin.com/in/kylewxng",
+  github: "https://github.com/kylewxng",
+  resume: "/Kyle_Wong_Resume.pdf",
+  location: "Los Angeles, CA",
+};
 
 export interface Experience {
+  id: string;
   role: string;
   company: string;
-  period: string;
-  status: "upcoming" | "current" | "past";
+  /** Optional second line, e.g. the client on a fellowship project */
+  context?: string;
+  location: string;
+  start: string;
+  end: string;
+  summary: string;
+  /** rich */
+  bullets: string[];
+  stack: string[];
   logo?: string;
 }
 
-export interface TechItem {
-  name: string;
-  logo: string;
+export interface Project {
+  id: string;
+  title: string;
+  tagline: string;
+  org: string;
+  year: string;
+  award?: string;
+  summary: string;
+  /** rich */
+  highlights: string[];
+  stack: string[];
+  image: string;
+  /** "phone" screenshots are letterboxed instead of cropped */
+  imageKind?: "screen" | "phone";
+  links?: { label: string; href: string }[];
 }
+
+export interface SideProject {
+  id: string;
+  title: string;
+  /** rich */
+  summary: string;
+  stack: string[];
+  year: string;
+  award?: string;
+  image: string;
+}
+
+export const METRICS = [
+  { value: "~80%", label: "less manual fraud case review", source: "Pacific Life" },
+  { value: "1.6M", label: "policies queryable in plain English", source: "Pacific Life" },
+  { value: "35.5K", label: "NBA plays indexed for semantic search", source: "Courtex" },
+  { value: "1st / 40", label: "teams at CitrusHack 2025", source: "Scenetic" },
+];
+
+export const PROFILE: { label: string; value: string }[] = [
+  { label: "Focus", value: "Data science · ML / AI · Product" },
+  { label: "Education", value: "UCLA, B.S. Statistics & Data Science ’27" },
+  { label: "Most recent", value: "Data Science Intern, Pacific Life" },
+  { label: "Works in", value: "Python · SQL · Snowflake · dbt · LangGraph · Next.js" },
+  { label: "Based in", value: "Los Angeles, CA" },
+];
+
+export const PILLARS = [
+  {
+    title: "Data & analytics",
+    body: "SQL, dbt and Snowflake pipelines, experiment design, regression, and dashboards that answer the question someone actually asked.",
+  },
+  {
+    title: "ML & AI",
+    body: "LLM agents, RAG, text-to-SQL, anomaly detection, and NLP. Evaluated against real analyst work, not just demos.",
+  },
+  {
+    title: "Product",
+    body: "Writing PRDs, scoping with stakeholders and researchers, and shipping the interface people use every day.",
+  },
+];
+
+export const EDUCATION = {
+  school: "University of California, Los Angeles",
+  degree: "B.S. Statistics & Data Science",
+  minor: "Minor in Data Science Engineering",
+  period: "2025 – 2027",
+  coursework: [
+    "Machine Learning Foundations (Cornell Tech)",
+    "Mathematical Statistics",
+    "Probability Theory",
+    "Regression Analysis",
+    "Design of Experiments",
+    "Data Structures & Algorithms",
+  ],
+};
+
+export const EXPERIENCE: Experience[] = [
+  {
+    id: "pacific-life",
+    role: "Data Science Intern",
+    company: "Pacific Life",
+    location: "Newport Beach, CA",
+    start: "Jun 2026",
+    end: "Sep 2026",
+    summary: "Built AI investigation tooling for the fraud analytics team.",
+    bullets: [
+      "Built a **Snowflake Cortex text-to-SQL agent** that lets fraud analysts self-serve queries across **1.6M policies**",
+      "Launched a **multi-agent** Snowflake CoWork workflow over **4M+ call transcripts**, routing cases to web-activity and transcript subagents and cutting manual case review time by **~80%**",
+      "Benchmarked **4** fraud detection approaches and recommended a rules + Isolation Forest ensemble that flags the **top 1%** of synthetic accounts for review",
+      "Extended production **dbt Cloud** models with **5** new fields, and added dbt tests that check agent SQL against analyst-written queries",
+    ],
+    stack: ["Snowflake Cortex", "dbt Cloud", "SQL", "Python", "Isolation Forest", "LLM agents"],
+    logo: "/logos/pacificlife.png",
+  },
+  {
+    id: "trustworthy-ai",
+    role: "Undergraduate Researcher",
+    company: "UCLA Trustworthy AI Lab",
+    location: "Los Angeles, CA",
+    start: "Feb 2026",
+    end: "Jul 2026",
+    summary: "Frontend lead on Realy, a LangGraph agent that answers questions across linked tables.",
+    bullets: [
+      "Wrote the **PRD** with PhD researchers, defining requirements and scope for the agent’s client",
+      "Built the **Next.js + TypeScript** client from scratch, shipping **10+ features in 8 weeks** with streaming, multi-step agent state",
+      "Diagnosed generated-SQL failure modes across linked-table schemas and prioritized multi-table join fixes with the research team",
+      "Shipped a **cost-tracking dashboard** and schema visualizer for per-query visibility into retrieval and token spend",
+    ],
+    stack: ["Next.js", "TypeScript", "LangGraph", "RAG", "Supabase"],
+    logo: "/logos/ucla.png",
+  },
+  {
+    id: "creative-labs",
+    role: "Software Developer",
+    company: "Creative Labs",
+    location: "Los Angeles, CA",
+    start: "Mar 2026",
+    end: "Jul 2026",
+    summary: "Frontend owner of TappedIn, an LLM-powered event recommender for LA.",
+    bullets: [
+      "Owned the full frontend on an **11-person team**, letting people search LA pop-ups in plain English by interest, budget, timing, and mood",
+      "Surfaced **200+** Instagram and Eventbrite events from a Supabase-backed LLM recommendation pipeline",
+    ],
+    stack: ["React", "TypeScript", "Supabase", "OpenAI", "LangChain"],
+    logo: "/logos/creativelabs.png",
+  },
+  {
+    id: "break-through-tech",
+    role: "ML Fellow",
+    company: "Break Through Tech AI @ Cornell Tech",
+    context: "Client project with Skinterest Tech, a NYC dermatology-tech startup",
+    location: "Remote",
+    start: "Apr 2025",
+    end: "Dec 2025",
+    summary: "Four-month client engagement turning customer reviews into product decisions.",
+    bullets: [
+      "Segmented **1,000+** Sephora reviews across **300+** products with an NLP pipeline (TF-IDF, K-means) and sentiment scoring",
+      "Turned clusters into customer personas and **Tableau** dashboards the founders used to prioritize product coverage",
+      "Presented findings to the founders with a **5-person** team, helping lift engagement by **~20–30%**",
+    ],
+    stack: ["Python", "scikit-learn", "NLTK", "Tableau", "NLP"],
+    logo: "/logos/breakthroughtech.png",
+  },
+];
 
 export const PROJECTS: Project[] = [
   {
     id: "courtex",
     title: "Courtex",
-    subtitle: "RAG-Powered NBA Play Analysis",
-    tags: ["Python", "RAG", "Semantic Search", "OpenAI", "NBA Play-by-Play"],
-    description:
-      "A retrieval-augmented system for exploring NBA play-by-play data through natural language. Ask a question like \"where does Doncic shoot\" and Courtex semantically retrieves the most relevant plays, then generates a written, scouting-style analysis of shot locations, tendencies, and efficiency.",
-    role: "Creator & Developer",
-    org: "Personal Project",
-    highlight: "RAG Pipeline · Sports Analytics",
+    tagline: "Natural-language search for NBA plays",
+    org: "Personal project",
     year: "2026",
+    summary:
+      "Ask “where does Doncic shoot?” and Courtex retrieves the most relevant plays, then writes a scouting-style breakdown of locations, tendencies, and efficiency.",
+    highlights: [
+      "Indexed **35,499** plays as 384-dim sentence-transformer embeddings in **pgvector**",
+      "**FastAPI + Llama-3.3-70B** RAG pipeline returning structured analysis in **~5s**",
+      "Containerized with Docker and deployed on **AWS Lambda + ECR**",
+    ],
+    stack: ["Python", "FastAPI", "pgvector", "Llama 3.3", "Docker", "AWS Lambda", "React"],
     image: "/projects/courtex.png",
-  },
-  {
-    id: "tappedin",
-    title: "TappedIn",
-    subtitle: "Vibe-Based Event Discovery",
-    tags: ["React", "Vite", "TypeScript", "FastAPI", "Supabase", "Pinecone", "OpenAI"],
-    description:
-      "An event discovery platform that turns a natural-language \"vibe\" into tailored recommendations. Users describe what they're in the mood for and TappedIn surfaces matching local events using semantic search over OpenAI embeddings and a Pinecone vector index, plus a personalized \"For You\" agent. Built on a React + Vite frontend and a FastAPI backend with Supabase and JWT auth.",
-    role: "Software Developer",
-    org: "Creative Labs",
-    highlight: "Full-Stack · Semantic Search",
-    year: "2026",
-    image: "/projects/tappedin.png",
+    links: [{ label: "Live demo", href: "https://courtex.vercel.app" }],
   },
   {
     id: "realy",
     title: "Realy",
-    subtitle: "Multi-Table Data Agent",
-    tags: ["React", "TypeScript", "FastAPI", "LangGraph", "Supabase", "AWS", "Vercel"],
-    description:
-      "Sole frontend engineer building an agentic chatbot for the UCLA Trustworthy AI Lab. Realy lets researchers query, join, and analyze multiple datasets through natural language, powered by a LangGraph agent backend with a React chat interface.",
-    role: "Lead Frontend Engineer",
+    tagline: "Analyze your spreadsheets through conversation",
     org: "UCLA Trustworthy AI Lab",
-    highlight: "Research Tool · In Production",
     year: "2026",
+    summary:
+      "A multi-table reasoning agent: upload CSVs, ask a question, and watch it plan, join, and query step by step, with every step traceable.",
+    highlights: [
+      "Led the frontend and wrote the **PRD** with PhD researchers",
+      "Streams **multi-step agent state** from a LangGraph backend",
+      "Cost dashboard exposing **per-query token spend**",
+    ],
+    stack: ["Next.js", "TypeScript", "LangGraph", "Supabase", "Tailwind"],
     image: "/projects/realy-v2.png",
   },
   {
+    id: "tappedin",
+    title: "TappedIn",
+    tagline: "Find LA events that match your vibe",
+    org: "Creative Labs",
+    year: "2026",
+    summary:
+      "Describe what you’re in the mood for and TappedIn ranks local events that fit, using semantic search over embeddings plus a personalized “For You” agent.",
+    highlights: [
+      "Owned the frontend on an **11-person** team",
+      "Ranks **200+** scraped events by interest, budget, timing, and mood",
+    ],
+    stack: ["React", "TypeScript", "FastAPI", "Supabase", "Pinecone", "OpenAI"],
+    image: "/projects/tappedin.png",
+  },
+  {
+    id: "scenetic",
+    title: "Scenetic",
+    tagline: "Drone computer vision for film location scouting",
+    org: "CitrusHack · UC Riverside",
+    year: "2025",
+    award: "1st place overall",
+    summary:
+      "Filmmakers describe a scene; a Raspberry Pi drone streams live footage, YOLOv8 tags what it sees, and Gemini picks the location that best matches.",
+    highlights: [
+      "Won **1st of 40** teams on a 3-person team",
+      "**~85%** accuracy matching descriptions to YOLOv8 detections",
+      "Built the Gemini matching and the **Expo React Native** app",
+    ],
+    stack: ["Python", "YOLOv8", "Gemini", "Flask", "React Native", "Raspberry Pi"],
+    image: "/projects/scenetic.png",
+    imageKind: "phone",
+    links: [{ label: "Code", href: "https://github.com/kylewxng/scenetic" }],
+  },
+];
+
+export const SIDE_PROJECTS: SideProject[] = [
+  {
     id: "hoops",
     title: "HoopsPredictor",
-    subtitle: "NBA Prop Prediction Engine",
-    tags: ["Python", "XGBoost", "scikit-learn", "Streamlit", "NumPy", "Pandas"],
-    description:
-      "Engineered a machine learning app that predicts NBA player points, rebounds, and assists using XGBoost ensemble modeling built on 16+ engineered features including rolling stat averages, matchup history, rest days, and previous game stats.",
-    role: "Creator & ML Engineer",
-    org: "Personal Project",
-    highlight: "ML Pipeline · SaaS Exploration",
+    summary:
+      "Predicts NBA player points, rebounds, and assists with XGBoost on **16+** engineered features: rolling averages, matchup history, and rest days.",
+    stack: ["Python", "XGBoost", "scikit-learn", "Streamlit"],
     year: "2026",
     image: "/projects/hoops.png",
   },
   {
     id: "transfermate",
     title: "TransferMate",
-    subtitle: "UC Transfer Navigator",
-    tags: ["React.js", "Tailwind", "Firebase", "Vercel", "Figma"],
-    description:
-      "Founded TransferMate, a web app that consolidates UC transfer requirements to help California community college students navigate transferring to all 9 UC campuses. Actively pitching to institutional partners for ASSIST.org API sponsorship to scale to 100+ users.",
-    role: "Founder & Developer",
-    org: "Personal Project",
-    highlight: "Startup · Actively Pitching",
+    summary:
+      "Helps California community college students plan transfers to all **9** UCs. Designed a 9-collection Firestore schema for course articulations and major requirements.",
+    stack: ["React", "Tailwind", "Firebase", "Figma"],
     year: "2025",
     image: "/projects/transfermate.png",
   },
   {
-    id: "scenetic",
-    title: "Scenetic",
-    subtitle: "Drone Computer Vision Mobile App",
-    tags: ["Python", "Google Gemini", "YOLOcv8", "React Native", "Expo", "Firebase", "Raspberry Pi"],
-    description:
-      "Scenetic, helps filmmakers and creative people find their perfect movie scene by taking user-written descriptions and finding the best portrait match using live drone footage. Scenetic uses Gemini API to extract key descriptive words to recommend the best filming environment for their cinema.",
-    role: "Lead Developer",
-    org: "Citrus Hack · UC Riverside",
-    highlight: "\u{1F3C6} 1st Place Winner",  
-    year: "2025",
-    image: "/projects/scenetic.png",
-  },
-  {
     id: "plantpulse",
     title: "PlantPulse",
-    subtitle: "AI Plant Health Tracker",
-    tags: ["Python Flask", "JavaScript", "Gemini API", "Firebase", "Figma", "HTML"],
-    description:
-      "Built a plant health tracking service leveraging Google's Gemini AI API. Users upload photos of their plants and receive AI-powered health scores, condition analysis, and actionable feedback. Tracks overall garden health over time.",
-    role: "Developer",
-    org: "HackMerced X · UC Merced",
-    highlight: "\u{1F949} 3rd Place AgTech",
+    summary:
+      "Upload a photo of a plant and get a Gemini-generated health score, diagnosis, and care feedback, tracked over time.",
+    stack: ["Flask", "JavaScript", "Gemini", "Firebase"],
     year: "2025",
+    award: "3rd place AgTech · HackMerced X",
     image: "/projects/plantpulse.png",
   },
 ];
 
-export const EXPERIENCE: Experience[] = [
+export const SKILLS: { group: string; items: string[] }[] = [
   {
-    role: "Data Analyst Intern",
-    company: "Pacific Life",
-    period: "Summer 2026",
-    status: "current",
-    logo: "/logos/pacificlife.png",
+    group: "Languages",
+    items: ["Python", "SQL", "R", "TypeScript", "JavaScript"],
   },
   {
-    role: "Undergraduate Researcher",
-    company: "UCLA Trustworthy AI Lab",
-    period: "2026 – Present",
-    status: "current",
-    logo: "/logos/ucla.png",
+    group: "AI & ML",
+    items: [
+      "LLM agents (LangGraph, Snowflake Cortex)",
+      "RAG",
+      "Text-to-SQL",
+      "sentence-transformers",
+      "pgvector",
+      "scikit-learn",
+      "XGBoost",
+      "PyTorch",
+      "Anomaly detection",
+      "NLP",
+    ],
   },
   {
-    role: "Software Developer",
-    company: "Creative Labs",
-    period: "2026",
-    status: "past",
-    logo: "/logos/creativelabs.png",
+    group: "Data & analytics",
+    items: [
+      "Snowflake",
+      "dbt Cloud",
+      "Postgres",
+      "pandas",
+      "Tableau",
+      "Power BI",
+      "A/B testing & DoE",
+      "Regression modeling",
+    ],
   },
   {
-    role: "ML Fellow — AI Studio",
-    company: "Skinterest Tech",
-    period: "2025",
-    status: "past",
-    logo: "/logos/skinterest.png",
+    group: "Engineering",
+    items: [
+      "FastAPI",
+      "Next.js",
+      "React",
+      "React Native",
+      "Docker",
+      "AWS (Lambda, ECR)",
+      "Supabase",
+      "Firebase",
+      "Git",
+    ],
   },
   {
-    role: "Cornell Tech Fellow",
-    company: "Break Through Tech AI",
-    period: "2025",
-    status: "past",
-    logo: "/logos/breakthroughtech.png",
+    group: "Product",
+    items: ["PRD writing", "Requirements scoping", "Stakeholder demos", "Figma", "Claude Code", "Cursor"],
   },
 ];
 
-export const TECH_LOGOS: Record<string, TechItem[]> = {
-  Languages: [
-    {
-      name: "Python",
-      logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg",
-    },
-    {
-      name: "R",
-      logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/r/r-original.svg",
-    },
-    {
-      name: "SQL",
-      logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/azuresqldatabase/azuresqldatabase-original.svg",
-    },
-    {
-      name: "JavaScript",
-      logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg",
-    },
-  ],
-  "Tools & Platforms": [
-    {
-      name: "Vercel",
-      logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vercel/vercel-original.svg",
-    },
-    {
-      name: "Supabase",
-      logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/supabase/supabase-original.svg",
-    },
-    {
-      name: "Power BI",
-      logo: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Crect x='22' y='8' width='10' height='32' rx='2' fill='%23F2C811'/%3E%3Crect x='10' y='16' width='10' height='24' rx='2' fill='%23EF8B2E'/%3E%3Crect x='34' y='4' width='10' height='36' rx='2' fill='%23E25B2A'/%3E%3C/svg%3E",
-    },
-    {
-      name: "Tableau",
-      logo: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Cpath d='M24 4v8h-8v4h8v8h4v-8h8v-4h-8V4h-4z' fill='%23E97627'/%3E%3Cpath d='M12 18v6H6v3h6v6h3v-6h6v-3h-6v-6h-3z' fill='%234E79A7'/%3E%3Cpath d='M33 18v6h-6v3h6v6h3v-6h6v-3h-6v-6h-3z' fill='%234E79A7'/%3E%3Cpath d='M24 30v6h-6v3h6v6h3v-6h6v-3h-6v-6h-3z' fill='%236BAA75'/%3E%3C/svg%3E",
-    },
-    {
-      name: "AWS",
-      logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/amazonwebservices/amazonwebservices-original-wordmark.svg",
-    },
-    {
-      name: "FastAPI",
-      logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/fastapi/fastapi-original.svg",
-    },
-  ],
-};
-
-export const SECTIONS = ["hero", "projects", "experience", "skills", "contact"];
+export const NAV_SECTIONS = [
+  { id: "about", label: "About" },
+  { id: "experience", label: "Experience" },
+  { id: "projects", label: "Projects" },
+  { id: "skills", label: "Skills" },
+  { id: "contact", label: "Contact" },
+];

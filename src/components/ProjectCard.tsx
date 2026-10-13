@@ -1,183 +1,73 @@
-"use client";
-
-import { useRef, useState, MouseEvent } from "react";
 import Image from "next/image";
-import FadeIn from "./FadeIn";
 import type { Project } from "@/data";
+import Chips from "./Chips";
+import Rich from "./Rich";
+import { ArrowUpRight } from "./icons";
 
-interface ProjectCardProps {
-  project: Project;
-  index: number;
-  isExpanded: boolean;
-  onClick: () => void;
-}
-
-export default function ProjectCard({ project, index, isExpanded, onClick }: ProjectCardProps) {
-  const ref = useRef<HTMLDivElement>(null);
-  const [tilt, setTilt] = useState({ x: 0, y: 0 });
-  const [hovering, setHovering] = useState(false);
-  const [glare, setGlare] = useState({ x: 50, y: 50 });
-
-  const handleMove = (e: MouseEvent) => {
-    if (!ref.current) return;
-    const r = ref.current.getBoundingClientRect();
-    const x = (e.clientX - r.left) / r.width;
-    const y = (e.clientY - r.top) / r.height;
-    setTilt({ x: (y - 0.5) * -8, y: (x - 0.5) * 8 });
-    setGlare({ x: x * 100, y: y * 100 });
-  };
-
-  const isMobile = project.id === "scenetic";
-  const cropTop = project.id === "transfermate";
-
-  const shimmerBg = isExpanded
-    ? "linear-gradient(90deg, #0078D4, #00A6FB, #0078D4)"
-    : hovering
-      ? "linear-gradient(90deg, transparent, #0078D4, transparent)"
-      : "transparent";
+export default function ProjectCard({ project }: { project: Project }) {
+  const phone = project.imageKind === "phone";
 
   return (
-    <FadeIn delay={index * 0.1}>
-      <div
-        ref={ref}
-        onClick={onClick}
-        onMouseMove={handleMove}
-        onMouseEnter={() => setHovering(true)}
-        onMouseLeave={() => {
-          setTilt({ x: 0, y: 0 });
-          setHovering(false);
-        }}
-        className="rounded-[20px] bg-white cursor-pointer relative overflow-hidden will-change-transform"
-        style={{
-          border: isExpanded ? "2px solid #0078D4" : "1.5px solid #E8EDF2",
-          transition: "border-color 0.4s, box-shadow 0.4s",
-          transform: `perspective(800px) rotateX(${hovering ? tilt.x : 0}deg) rotateY(${hovering ? tilt.y : 0}deg)`,
-          transformStyle: "preserve-3d",
-          boxShadow: hovering
-            ? "0 20px 60px rgba(0,120,212,0.1), 0 8px 24px rgba(0,0,0,0.05)"
-            : "0 2px 12px rgba(0,0,0,0.03)",
-        }}
-      >
-        {/* Glare overlay */}
-        <div
-          className="absolute inset-0 rounded-[20px] pointer-events-none z-[3]"
-          style={{
-            background: hovering
-              ? `radial-gradient(circle at ${glare.x}% ${glare.y}%, rgba(0,120,212,0.07) 0%, transparent 60%)`
-              : "none",
-          }}
+    <article className="group flex h-full flex-col overflow-hidden rounded-xl border border-border bg-surface transition-colors hover:border-border-strong">
+      <div className="relative aspect-16/10 overflow-hidden border-b border-border bg-surface-2">
+        <Image
+          src={project.image}
+          alt={`${project.title} screenshot`}
+          fill
+          sizes="(min-width: 768px) 560px, 100vw"
+          className={
+            phone
+              ? "object-contain py-5 transition-transform duration-500 group-hover:scale-[1.02]"
+              : "object-cover object-top transition-transform duration-500 group-hover:scale-[1.02]"
+          }
         />
+        {project.award && (
+          <span className="absolute left-3 top-3 rounded-full bg-fg px-2.5 py-1 font-mono text-[10px] font-medium uppercase tracking-widest text-bg">
+            {project.award}
+          </span>
+        )}
+      </div>
 
-        {/* Top accent bar */}
-        <div
-          className="h-1"
-          style={{
-            backgroundImage: shimmerBg,
-            backgroundSize: isExpanded ? "200% 100%" : "100% 100%",
-            transition: "background-image 0.4s",
-            animation: isExpanded ? "barShimmer 2s linear infinite" : "none",
-          }}
-        />
+      <div className="flex flex-1 flex-col p-6">
+        <p className="font-mono text-[11px] uppercase tracking-[0.12em] text-subtle">
+          {project.org} · {project.year}
+        </p>
+        <h3 className="mt-2 text-xl font-semibold tracking-tight text-fg">{project.title}</h3>
+        <p className="text-[15px] text-muted">{project.tagline}</p>
 
-        <div className="px-8 py-7 relative z-[2]">
-          {/* Header row */}
-          <div className="flex justify-between items-start mb-2">
-            <div className="flex items-center gap-3.5">
-              <span
-                className="text-[34px] inline-block"
-                style={{
-                  transform: hovering ? "scale(1.15) rotate(-5deg)" : "scale(1)",
-                  transition: "transform 0.4s cubic-bezier(.16,1,.3,1)",
-                }}
-              >
+        <p className="mt-4 text-[14px] leading-relaxed text-muted">{project.summary}</p>
+
+        <ul className="mt-4 space-y-1.5">
+          {project.highlights.map((h) => (
+            <li key={h} className="flex gap-2.5 text-[14px] leading-relaxed text-muted">
+              <span className="mt-[0.6em] size-1 shrink-0 rounded-full bg-accent" aria-hidden="true" />
+              <span>
+                <Rich text={h} />
               </span>
-              <div>
-                <h3 className="text-2xl font-bold text-[#0A1628] tracking-tight">
-                  {project.title}
-                </h3>
-                <p className="text-[13px] text-[#6B7B8D] font-medium">
-                  {project.subtitle} · {project.org}
-                </p>
-              </div>
-            </div>
-            <div className="flex items-center gap-2.5 shrink-0">
-              <span className="text-[11px] text-[#0078D4] font-semibold bg-[rgba(0,120,212,0.08)] px-3 py-1 rounded-full whitespace-nowrap">
-                {project.highlight}
-              </span>
-              <span className="text-[11px] text-[#9BA8B4] font-medium">
-                {project.year}
-              </span>
-            </div>
-          </div>
+            </li>
+          ))}
+        </ul>
 
-          {/* Expandable content */}
-          <div
-            style={{
-              maxHeight: isExpanded ? 800 : 0,
-              opacity: isExpanded ? 1 : 0,
-              overflow: "hidden",
-              transition:
-                "max-height 0.7s cubic-bezier(.16,1,.3,1), opacity 0.5s ease",
-            }}
-          >
-            {/* Screenshot */}
-            {project.image && (
-              <div
-                className={`mt-5 mb-5 rounded-xl overflow-hidden border border-[#E8EDF2] ${isMobile ? "bg-transparent flex justify-center" : "bg-[#f0f2f5]"}`}
-              >
-                <Image
-                  src={project.image}
-                  alt={`${project.title} screenshot`}
-                  width={isMobile ? 200 : 800}
-                  height={isMobile ? 400 : 500}
-                  className="block"
-                  style={{
-                    width: isMobile ? "auto" : "100%",
-                    height: isMobile ? "auto" : "auto",
-                    maxHeight: isMobile ? 400 : undefined,
-                    objectFit: isMobile ? "contain" : "contain",
-                    objectPosition: "top",
-                    marginTop: cropTop ? -5 : undefined,
-                  }}
-                />
-              </div>
-            )}
-
-            <p className="text-sm text-[#4A5568] leading-7 mb-5">
-              {project.description}
-            </p>
-
-            <div className="flex flex-wrap gap-2">
-              {project.tags.map((tag, i) => (
-                <span
-                  key={tag}
-                  className="text-[11px] font-semibold text-[#0078D4] bg-[rgba(0,120,212,0.06)] px-3.5 py-1.5 rounded-full border border-[rgba(0,120,212,0.1)]"
-                  style={{
-                    transform: isExpanded ? "translateY(0)" : "translateY(10px)",
-                    opacity: isExpanded ? 1 : 0,
-                    transition: `all 0.4s cubic-bezier(.16,1,.3,1) ${0.2 + i * 0.05}s`,
-                  }}
+        <div className="mt-auto pt-6">
+          <Chips items={project.stack} />
+          {project.links && (
+            <div className="mt-5 flex gap-4 border-t border-border pt-4">
+              {project.links.map((l) => (
+                <a
+                  key={l.href}
+                  href={l.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1 text-[13px] font-medium text-fg hover:text-accent"
                 >
-                  {tag}
-                </span>
+                  {l.label}
+                  <ArrowUpRight />
+                </a>
               ))}
             </div>
-          </div>
-
-          {/* Expand arrow */}
-          <div className="flex justify-center mt-3">
-            <span
-              className="text-lg text-[#0078D4] inline-block opacity-40"
-              style={{
-                transform: isExpanded ? "rotate(180deg)" : "rotate(0deg)",
-                transition: "transform 0.4s cubic-bezier(.16,1,.3,1)",
-              }}
-            >
-              ↓
-            </span>
-          </div>
+          )}
         </div>
       </div>
-    </FadeIn>
+    </article>
   );
 }
