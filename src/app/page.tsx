@@ -1,6 +1,7 @@
 import {
   EDUCATION,
   EXPERIENCE,
+  HERO_WORDS,
   METRICS,
   PILLARS,
   PROFILE,
@@ -16,31 +17,38 @@ import ExperienceItem from "@/components/ExperienceItem";
 import ProjectCard from "@/components/ProjectCard";
 import SideProjectRow from "@/components/SideProjectRow";
 import CopyEmail from "@/components/CopyEmail";
+import CommandPalette from "@/components/CommandPalette";
+import CountUp from "@/components/CountUp";
+import LocalTime from "@/components/LocalTime";
+import RotatingWords from "@/components/RotatingWords";
+import Spotlight from "@/components/Spotlight";
+import { LensControl, LensProvider } from "@/components/Lens";
 import { ArrowDown, ArrowUpRight, GitHubIcon, LinkedInIcon } from "@/components/icons";
 
 const CONTACT_ROWS = [
   { label: "Email", value: SITE.email, href: `mailto:${SITE.email}`, copy: true },
   { label: "LinkedIn", value: "in/kylewxng", href: SITE.linkedin },
   { label: "GitHub", value: "kylewxng", href: SITE.github },
-  { label: "Resume", value: "Kyle_Wong_Resume.pdf", href: SITE.resume },
 ];
 
 export default function Portfolio() {
   return (
-    <>
+    <LensProvider>
       <Nav />
+      <CommandPalette />
 
       <main id="main">
         {/* ═══════ HERO ═══════ */}
         <section id="top" className="relative overflow-hidden">
+          <div className="hero-glow pointer-events-none absolute inset-0" aria-hidden="true" />
           <div className="grid-bg pointer-events-none absolute inset-0 opacity-60" aria-hidden="true" />
 
           <div className="relative mx-auto max-w-6xl px-5 pb-16 pt-32 sm:px-8 sm:pt-40">
             <div className="grid gap-12 lg:grid-cols-[1fr_380px] lg:items-end">
               <div>
-                <p className="rise flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.16em] text-muted">
+                <p className="rise inline-flex items-center gap-2 rounded-full border border-cf-200 bg-accent-soft px-3 py-1 font-mono text-[11px] uppercase tracking-[0.16em] text-accent dark:border-cf-800">
                   <span className="status-dot size-1.5 rounded-full bg-ok" aria-hidden="true" />
-                  Open to PM, data science & ML roles
+                  Open to PM, Data Science & ML roles
                 </p>
 
                 <h1
@@ -54,10 +62,10 @@ export default function Portfolio() {
                   className="rise mt-5 max-w-xl text-xl leading-snug tracking-tight text-fg sm:text-2xl"
                   style={{ animationDelay: "160ms" }}
                 >
-                  I turn messy data into tools people actually use:{" "}
-                  <span className="text-muted">
-                    LLM agents, ML models, and the products around them.
-                  </span>
+                  I turn messy data into
+                  <br />
+                  <RotatingWords words={HERO_WORDS} />
+                  <span className="text-cornflower">.</span>
                 </p>
 
                 <p
@@ -75,24 +83,22 @@ export default function Portfolio() {
                 >
                   <a
                     href="#projects"
-                    className="inline-flex h-10 items-center gap-1.5 rounded-md bg-fg px-4 text-sm font-medium text-bg transition-opacity hover:opacity-85"
+                    className="group inline-flex h-10 items-center gap-1.5 rounded-md bg-cf-600 px-4 text-sm font-medium text-white shadow-[0_6px_20px_-8px_var(--cf-500)] transition-all hover:-translate-y-0.5 hover:bg-cf-500 hover:shadow-[0_10px_28px_-8px_var(--cf-400)]"
                   >
-                    View work <ArrowDown />
+                    View work <ArrowDown className="size-3.5 transition-transform group-hover:translate-y-0.5" />
                   </a>
                   <a
-                    href={SITE.resume}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex h-10 items-center gap-1.5 rounded-md border border-border-strong bg-surface px-4 text-sm font-medium text-fg transition-colors hover:border-fg"
+                    href="#contact"
+                    className="inline-flex h-10 items-center rounded-md border border-border-strong bg-surface px-4 text-sm font-medium text-fg transition-all hover:-translate-y-0.5 hover:border-cf-400 hover:text-accent"
                   >
-                    Resume <span className="font-mono text-[11px] text-subtle">PDF</span>
+                    Get in touch
                   </a>
                   <a
                     href={SITE.github}
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label="GitHub"
-                    className="grid size-10 place-items-center rounded-md border border-border text-muted transition-colors hover:border-border-strong hover:text-fg"
+                    className="grid size-10 place-items-center rounded-md border border-border text-muted transition-all hover:-translate-y-0.5 hover:border-cf-300 hover:text-accent"
                   >
                     <GitHubIcon />
                   </a>
@@ -101,7 +107,7 @@ export default function Portfolio() {
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label="LinkedIn"
-                    className="grid size-10 place-items-center rounded-md border border-border text-muted transition-colors hover:border-border-strong hover:text-fg"
+                    className="grid size-10 place-items-center rounded-md border border-border text-muted transition-all hover:-translate-y-0.5 hover:border-cf-300 hover:text-accent"
                   >
                     <LinkedInIcon />
                   </a>
@@ -109,15 +115,18 @@ export default function Portfolio() {
               </div>
 
               {/* Profile spec sheet */}
-              <div
-                className="rise rounded-xl border border-border bg-surface/80 backdrop-blur-sm"
+              <Spotlight
+                className="rise rounded-xl border border-border bg-surface/80 backdrop-blur-sm transition-colors hover:border-cf-300"
                 style={{ animationDelay: "400ms" }}
               >
                 <div className="flex items-center justify-between border-b border-border px-5 py-3 font-mono text-[11px] uppercase tracking-[0.14em] text-subtle">
-                  <span>Profile</span>
+                  <span className="flex items-center gap-2">
+                    <span className="size-1.5 rounded-full bg-cornflower" aria-hidden="true" />
+                    Profile
+                  </span>
                   <span>Rev. Oct 2026</span>
                 </div>
-                <dl className="divide-y divide-border">
+                <dl className="relative z-2 divide-y divide-border">
                   {PROFILE.map((row) => (
                     <div key={row.label} className="grid grid-cols-[96px_1fr] gap-3 px-5 py-3">
                       <dt className="pt-px font-mono text-[11px] uppercase tracking-widest text-subtle">
@@ -126,8 +135,16 @@ export default function Portfolio() {
                       <dd className="text-[13px] text-fg">{row.value}</dd>
                     </div>
                   ))}
+                  <div className="grid grid-cols-[96px_1fr] gap-3 px-5 py-3">
+                    <dt className="pt-px font-mono text-[11px] uppercase tracking-widest text-subtle">
+                      Local time
+                    </dt>
+                    <dd className="text-[13px] text-fg">
+                      <LocalTime />
+                    </dd>
+                  </div>
                 </dl>
-              </div>
+              </Spotlight>
             </div>
 
             {/* Metrics */}
@@ -136,14 +153,16 @@ export default function Portfolio() {
               style={{ animationDelay: "480ms" }}
             >
               {METRICS.map((m) => (
-                <li key={m.label} className="bg-surface p-5 sm:p-6">
-                  <p className="text-3xl font-semibold tracking-tight text-fg sm:text-4xl">
-                    {m.value}
-                  </p>
-                  <p className="mt-2 text-[13px] leading-snug text-muted">{m.label}</p>
-                  <p className="mt-3 font-mono text-[10px] uppercase tracking-[0.14em] text-subtle">
-                    {m.source}
-                  </p>
+                <li key={m.label}>
+                  <Spotlight className="group h-full bg-surface p-5 sm:p-6">
+                    <p className="relative z-2 text-3xl font-semibold tracking-tight text-fg transition-colors group-hover:text-accent sm:text-4xl">
+                      <CountUp metric={m} />
+                    </p>
+                    <p className="relative z-2 mt-2 text-[13px] leading-snug text-muted">{m.label}</p>
+                    <p className="relative z-2 mt-3 font-mono text-[10px] uppercase tracking-[0.14em] text-subtle">
+                      {m.source}
+                    </p>
+                  </Spotlight>
                 </li>
               ))}
             </ul>
@@ -151,12 +170,7 @@ export default function Portfolio() {
         </section>
 
         {/* ═══════ ABOUT ═══════ */}
-        <Section
-          id="about"
-          num="01"
-          label="About"
-          title="Between the data and the decision"
-        >
+        <Section id="about" num="01" label="About" title="Between the data and the decision">
           <div className="grid gap-12 lg:grid-cols-[1fr_380px]">
             <Reveal className="space-y-5 text-[16px] leading-relaxed text-muted">
               <p>
@@ -175,39 +189,50 @@ export default function Portfolio() {
               <p>
                 I’m looking for roles in{" "}
                 <span className="text-fg">
-                  product management, data science, ML/AI, and analytics
+                  Product Management, Data Science, ML/AI, and Analytics
                 </span>
                 , where understanding the model and understanding the user both matter.
               </p>
             </Reveal>
 
             <Reveal delay={0.1}>
-              <div className="rounded-xl border border-border bg-surface p-5">
-                <p className="font-mono text-[11px] uppercase tracking-[0.14em] text-subtle">
-                  Education
-                </p>
-                <p className="mt-3 font-semibold tracking-tight text-fg">{EDUCATION.school}</p>
-                <p className="text-[14px] text-muted">{EDUCATION.degree}</p>
-                <p className="text-[14px] text-muted">{EDUCATION.minor}</p>
-                <p className="mt-1 font-mono text-[11px] text-subtle">{EDUCATION.period}</p>
-                <p className="mt-5 font-mono text-[11px] uppercase tracking-[0.14em] text-subtle">
-                  Coursework
-                </p>
-                <ul className="mt-2 space-y-1 text-[13px] text-muted">
-                  {EDUCATION.coursework.map((c) => (
-                    <li key={c}>{c}</li>
-                  ))}
-                </ul>
-              </div>
+              <Spotlight className="rounded-xl border border-border bg-surface p-5 transition-colors hover:border-cf-300">
+                <div className="relative z-2">
+                  <p className="font-mono text-[11px] uppercase tracking-[0.14em] text-subtle">
+                    Education
+                  </p>
+                  <p className="mt-3 font-semibold tracking-tight text-fg">{EDUCATION.school}</p>
+                  <p className="text-[14px] text-muted">{EDUCATION.degree}</p>
+                  <p className="text-[14px] text-muted">{EDUCATION.minor}</p>
+                  <p className="mt-1 font-mono text-[11px] text-subtle">{EDUCATION.period}</p>
+                  <p className="mt-5 font-mono text-[11px] uppercase tracking-[0.14em] text-subtle">
+                    Coursework
+                  </p>
+                  <ul className="mt-2 space-y-1 text-[13px] text-muted">
+                    {EDUCATION.coursework.map((c) => (
+                      <li key={c} className="flex gap-2">
+                        <span className="text-cornflower" aria-hidden="true">›</span>
+                        {c}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </Spotlight>
             </Reveal>
           </div>
 
           <div className="mt-14 grid gap-px overflow-hidden rounded-xl border border-border bg-border md:grid-cols-3">
             {PILLARS.map((p, i) => (
-              <Reveal key={p.title} delay={i * 0.08} className="bg-surface p-6">
-                <p className="font-mono text-[11px] text-accent">0{i + 1}</p>
-                <h3 className="mt-3 font-semibold tracking-tight text-fg">{p.title}</h3>
-                <p className="mt-2 text-[14px] leading-relaxed text-muted">{p.body}</p>
+              <Reveal key={p.title} delay={i * 0.08} className="h-full">
+                <Spotlight className="group h-full bg-surface p-6">
+                  <div className="relative z-2">
+                    <p className="font-mono text-[11px] text-cornflower">0{i + 1}</p>
+                    <h3 className="mt-3 font-semibold tracking-tight text-fg transition-colors group-hover:text-accent">
+                      {p.title}
+                    </h3>
+                    <p className="mt-2 text-[14px] leading-relaxed text-muted">{p.body}</p>
+                  </div>
+                </Spotlight>
               </Reveal>
             ))}
           </div>
@@ -219,8 +244,11 @@ export default function Portfolio() {
           num="02"
           label="Experience"
           title="Where I’ve worked"
-          intro="Most recent first: internships, research, and client work across data science, ML, and product."
+          intro="Most recent first. Pick a lens to highlight the work most relevant to the role you’re hiring for."
         >
+          <Reveal className="mb-8">
+            <LensControl />
+          </Reveal>
           <div className="border-b border-border">
             {EXPERIENCE.map((exp) => (
               <Reveal key={exp.id}>
@@ -238,9 +266,12 @@ export default function Portfolio() {
           title="Selected work"
           intro="Things I’ve built end to end, from retrieval pipelines to the interface people actually touch."
         >
+          <Reveal className="mb-8">
+            <LensControl />
+          </Reveal>
           <div className="grid gap-6 md:grid-cols-2">
             {PROJECTS.map((p, i) => (
-              <Reveal key={p.id} delay={(i % 2) * 0.08}>
+              <Reveal key={p.id} delay={(i % 2) * 0.08} className="h-full">
                 <ProjectCard project={p} />
               </Reveal>
             ))}
@@ -274,7 +305,7 @@ export default function Portfolio() {
                   {s.items.map((item) => (
                     <li
                       key={item}
-                      className="rounded-md border border-border bg-surface px-2.5 py-1 text-[13px] text-fg"
+                      className="cursor-default rounded-md border border-border bg-surface px-2.5 py-1 text-[13px] text-fg transition-all duration-200 hover:-translate-y-0.5 hover:border-cf-300 hover:bg-accent-soft hover:text-accent"
                     >
                       {item}
                     </li>
@@ -291,17 +322,17 @@ export default function Portfolio() {
           num="05"
           label="Contact"
           title="Let’s talk"
-          intro="I’m open to product, data science, ML/AI, and analytics roles. Email is the fastest way to reach me."
+          intro="I’m open to Product, Data Science, ML/AI, and Analytics roles. Email is the fastest way to reach me."
         >
           <Reveal>
             <a
               href={`mailto:${SITE.email}`}
               className="group inline-flex items-center gap-3 text-2xl font-semibold tracking-tight text-fg sm:text-4xl"
             >
-              <span className="underline decoration-border-strong decoration-1 underline-offset-[6px] transition-colors group-hover:decoration-accent">
+              <span className="bg-linear-to-r from-cf-400 to-cf-600 bg-size-[0%_2px] bg-bottom-left bg-no-repeat pb-1 transition-[background-size,color] duration-500 group-hover:bg-size-[100%_2px] group-hover:text-accent">
                 {SITE.email}
               </span>
-              <ArrowUpRight className="size-6 text-subtle transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-accent" />
+              <ArrowUpRight className="size-6 text-subtle transition-transform group-hover:-translate-y-1 group-hover:translate-x-1 group-hover:text-cornflower" />
             </a>
           </Reveal>
 
@@ -310,24 +341,26 @@ export default function Portfolio() {
               {CONTACT_ROWS.map((row) => (
                 <li
                   key={row.label}
-                  className="grid grid-cols-[88px_1fr_auto] items-center gap-4 border-t border-border py-4 sm:grid-cols-[200px_1fr_auto] sm:gap-10"
+                  className="group grid grid-cols-[88px_1fr_auto] items-center gap-4 border-t border-border py-4 transition-colors hover:bg-accent-soft sm:grid-cols-[200px_1fr_auto] sm:gap-10"
                 >
-                  <span className="font-mono text-[11px] uppercase tracking-[0.14em] text-subtle">
+                  <span className="pl-2 font-mono text-[11px] uppercase tracking-[0.14em] text-subtle">
                     {row.label}
                   </span>
                   <a
                     href={row.href}
                     target={row.copy ? undefined : "_blank"}
                     rel={row.copy ? undefined : "noopener noreferrer"}
-                    className="truncate text-[15px] text-fg hover:text-accent"
+                    className="truncate text-[15px] text-fg transition-colors group-hover:text-accent"
                   >
                     {row.value}
                   </a>
-                  {row.copy ? (
-                    <CopyEmail email={SITE.email} />
-                  ) : (
-                    <ArrowUpRight className="size-3.5 text-subtle" />
-                  )}
+                  <span className="pr-2">
+                    {row.copy ? (
+                      <CopyEmail email={SITE.email} />
+                    ) : (
+                      <ArrowUpRight className="size-3.5 text-subtle transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-cornflower" />
+                    )}
+                  </span>
                 </li>
               ))}
             </ul>
@@ -337,11 +370,13 @@ export default function Portfolio() {
 
       <footer className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-4 border-t border-border px-5 py-8 font-mono text-[11px] uppercase tracking-[0.12em] text-subtle sm:px-8">
         <span>© 2026 Kyle Wong · {SITE.location}</span>
-        <span>Next.js · Vercel</span>
-        <a href="#top" className="hover:text-fg">
+        <span>
+          Press <kbd className="rounded border border-border px-1 text-accent">Ctrl/⌘ K</kbd> to navigate
+        </span>
+        <a href="#top" className="transition-colors hover:text-accent">
           Back to top ↑
         </a>
       </footer>
-    </>
+    </LensProvider>
   );
 }

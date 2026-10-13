@@ -15,17 +15,17 @@ export default function OpengraphImage() {
           flexDirection: "column",
           justifyContent: "space-between",
           padding: 80,
-          background: "#0b0b0c",
+          background: "#0a0c11",
           color: "#ededeb",
         }}
       >
-        <div style={{ display: "flex", fontSize: 24, color: "#8aa4ff", letterSpacing: 4 }}>
+        <div style={{ display: "flex", fontSize: 24, color: "#6495ed", letterSpacing: 4 }}>
           KYLE.WONG
         </div>
         <div style={{ display: "flex", flexDirection: "column" }}>
           <div style={{ fontSize: 96, fontWeight: 700, letterSpacing: -3 }}>Kyle Wong</div>
           <div style={{ fontSize: 40, color: "#a6a6a1", marginTop: 12 }}>
-            Data science · ML / AI · Product
+            Data Science · ML / AI · Product
           </div>
         </div>
         <div style={{ display: "flex", fontSize: 24, color: "#6e6e6a" }}>

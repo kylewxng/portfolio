@@ -8,7 +8,7 @@ const geist = Geist({ subsets: ["latin"], variable: "--font-geist-sans" });
 const geistMono = Geist_Mono({ subsets: ["latin"], variable: "--font-geist-mono" });
 
 const description =
-  "Kyle Wong is a UCLA Statistics & Data Science student building LLM agents, ML models, and data products. Open to product, data science, ML/AI, and analytics roles.";
+  "Kyle Wong is a UCLA Statistics & Data Science student building LLM agents, ML models, and data products. Open to Product, Data Science, ML/AI, and Analytics roles.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE.url),

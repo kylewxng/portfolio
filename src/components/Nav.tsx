@@ -1,14 +1,20 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { NAV_SECTIONS, SITE } from "@/data";
+import { NAV_SECTIONS } from "@/data";
 import ThemeToggle from "./ThemeToggle";
+import { openCommandPalette } from "./CommandPalette";
 
 export default function Nav() {
   const [active, setActive] = useState("");
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  const [modKey, setModKey] = useState("Ctrl");
   const progressRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (/Mac|iPhone|iPad/.test(navigator.platform)) setModKey("⌘");
+  }, []);
 
   useEffect(() => {
     const onScroll = () => {
@@ -55,7 +61,7 @@ export default function Nav() {
 
       <nav className="mx-auto flex h-14 max-w-6xl items-center justify-between px-5 sm:px-8">
         <a href="#top" className="font-mono text-[13px] font-medium tracking-tight text-fg">
-          kyle<span className="text-accent">.</span>wong
+          kyle<span className="text-cornflower">.</span>wong
         </a>
 
         <ul className="hidden items-center gap-1 md:flex">
@@ -64,10 +70,16 @@ export default function Nav() {
               <a
                 href={`#${s.id}`}
                 aria-current={active === s.id ? "true" : undefined}
-                className={`rounded-md px-3 py-1.5 text-[13px] transition-colors ${
+                className={`relative rounded-md px-3 py-1.5 text-[13px] transition-colors hover:bg-accent-soft ${
                   active === s.id ? "text-fg" : "text-muted hover:text-fg"
                 }`}
               >
+                <span
+                  aria-hidden="true"
+                  className={`absolute inset-x-3 -bottom-[11px] h-0.5 rounded-full bg-cornflower transition-transform duration-300 ${
+                    active === s.id ? "scale-x-100" : "scale-x-0"
+                  }`}
+                />
                 <span className="mr-1.5 font-mono text-[11px] text-subtle">
                   {String(i + 1).padStart(2, "0")}
                 </span>
@@ -79,14 +91,21 @@ export default function Nav() {
 
         <div className="flex items-center gap-2">
           <ThemeToggle />
-          <a
-            href={SITE.resume}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="hidden h-8 items-center rounded-md bg-fg px-3 text-[13px] font-medium text-bg transition-opacity hover:opacity-85 sm:inline-flex"
+          <button
+            type="button"
+            onClick={openCommandPalette}
+            aria-label="Open command menu"
+            className="group hidden h-8 items-center gap-2 rounded-md border border-border bg-surface px-2.5 text-[13px] text-muted transition-colors hover:border-cf-300 hover:text-fg sm:inline-flex"
           >
-            Resume
-          </a>
+            <svg className="size-3.5 text-cornflower" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth={1.6} aria-hidden="true">
+              <circle cx="7" cy="7" r="4.5" />
+              <path d="M10.5 10.5 14 14" strokeLinecap="round" />
+            </svg>
+            Search
+            <kbd className="rounded border border-border px-1 font-mono text-[10px] text-subtle group-hover:border-cf-200">
+              {modKey} K
+            </kbd>
+          </button>
           <button
             type="button"
             onClick={() => setOpen((o) => !o)}
@@ -122,24 +141,13 @@ export default function Nav() {
               </a>
             </li>
           ))}
-          <li>
-            <a
-              href={SITE.resume}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-baseline gap-3 border-t border-border py-3 text-sm text-accent"
-            >
-              <span className="font-mono text-[11px] text-subtle">PDF</span>
-              Resume
-            </a>
-          </li>
         </ul>
       )}
 
       <div
         ref={progressRef}
         aria-hidden="true"
-        className="absolute bottom-[-1px] left-0 h-px w-full origin-left bg-accent"
+        className="absolute bottom-[-1px] left-0 h-0.5 w-full origin-left bg-linear-to-r from-cf-300 via-cf-400 to-cf-600"
         style={{ transform: "scaleX(0)" }}
       />
     </header>
