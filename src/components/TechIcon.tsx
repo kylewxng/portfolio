@@ -1,3 +1,4 @@
+import Image from "next/image";
 import {
   siClaude,
   siCursor,
@@ -50,6 +51,14 @@ const ICONS: Record<string, SimpleIcon> = {
   Cursor: siCursor,
 };
 
+/** Logos missing from simple-icons, as PNGs in /public/logos/tech. `dark` is an optional dark-mode variant. */
+const IMAGES: Record<string, { src: string; dark?: string; wide?: boolean }> = {
+  "dbt Cloud": { src: "/logos/tech/dbt.png" },
+  Tableau: { src: "/logos/tech/tableau.png" },
+  "Power BI": { src: "/logos/tech/powerbi.png" },
+  "AWS (Lambda, ECR)": { src: "/logos/tech/aws.png", dark: "/logos/tech/aws-dark.png", wide: true },
+};
+
 /** Near-black brand colors disappear in dark mode, so those follow the text color. */
 function isDark(hex: string) {
   const n = parseInt(hex, 16);
@@ -58,6 +67,20 @@ function isDark(hex: string) {
 }
 
 export default function TechIcon({ name, className = "size-3.5" }: { name: string; className?: string }) {
+  const img = IMAGES[name];
+  if (img) {
+    const size = img.wide ? "h-3.5 w-auto" : className;
+    const props = { alt: "", width: img.wide ? 80 : 64, height: img.wide ? 48 : 64, "aria-hidden": true };
+    return img.dark ? (
+      <>
+        <Image src={img.src} {...props} className={`shrink-0 ${size} dark:hidden`} />
+        <Image src={img.dark} {...props} className={`hidden shrink-0 ${size} dark:block`} />
+      </>
+    ) : (
+      <Image src={img.src} {...props} className={`shrink-0 ${size}`} />
+    );
+  }
+
   const icon = ICONS[name];
   if (!icon) return null;
   return (
