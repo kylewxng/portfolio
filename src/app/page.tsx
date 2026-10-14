@@ -22,6 +22,7 @@ import CountUp from "@/components/CountUp";
 import LocalTime from "@/components/LocalTime";
 import RotatingWords from "@/components/RotatingWords";
 import Spotlight from "@/components/Spotlight";
+import TechIcon from "@/components/TechIcon";
 import { ArrowDown, ArrowUpRight, GitHubIcon, LinkedInIcon } from "@/components/icons";
 
 const CONTACT_ROWS = [
@@ -173,24 +174,18 @@ export default function Portfolio() {
           <div className="grid gap-12 lg:grid-cols-[1fr_380px]">
             <Reveal className="space-y-5 text-[16px] leading-relaxed text-muted">
               <p>
-                I’m a Statistics & Data Science student at UCLA (minor in Data Science
-                Engineering). The work I like best is taking a vague question and turning
-                it into something a team can use every day.
+                I’m a Statistics & Data Science student at UCLA. I like taking a vague
+                question and turning it into something a team uses every day.
               </p>
               <p>
-                At Pacific Life, that meant a text-to-SQL agent so fraud analysts could
-                query <span className="text-fg">1.6M policies</span> without waiting on
-                anyone, and a multi-agent workflow that cut manual case review by{" "}
-                <span className="text-fg">~80%</span>. At the Trustworthy AI Lab, it meant
-                writing the PRD with PhD researchers and building the interface for their
-                data agent from scratch.
+                Most recently: a text-to-SQL agent over{" "}
+                <span className="text-fg">1.6M policies</span> and a multi-agent workflow
+                that cut fraud case review by <span className="text-fg">~80%</span> at
+                Pacific Life.
               </p>
               <p>
-                I’m looking for roles in{" "}
-                <span className="text-fg">
-                  Product Management, Data Science, ML/AI, and Analytics
-                </span>
-                , where understanding the model and understanding the user both matter.
+                Looking for{" "}
+                <span className="text-fg">Product, Data Science, and ML/AI</span> roles.
               </p>
             </Reveal>
 
@@ -298,8 +293,9 @@ export default function Portfolio() {
                   {s.items.map((item) => (
                     <li
                       key={item}
-                      className="cursor-default rounded-md border border-border bg-surface px-2.5 py-1 text-[13px] text-fg transition-all duration-200 hover:-translate-y-0.5 hover:border-cf-300 hover:bg-accent-soft hover:text-accent"
+                      className="inline-flex cursor-default items-center gap-1.5 rounded-md border border-border bg-surface px-2.5 py-1 text-[13px] text-fg transition-all duration-200 hover:-translate-y-0.5 hover:border-cf-300 hover:bg-accent-soft hover:text-accent"
                     >
+                      <TechIcon name={item} />
                       {item}
                     </li>
                   ))}

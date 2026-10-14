@@ -51,6 +51,7 @@ export interface SideProject {
   year: string;
   award?: string;
   image: string;
+  href?: string;
 }
 
 export interface Metric {
@@ -78,20 +79,21 @@ export const PROFILE: { label: string; value: string }[] = [
   { label: "Most recent", value: "Data Science Intern, Pacific Life" },
   { label: "Works in", value: "Python · SQL · Snowflake · dbt · LangGraph · Next.js" },
   { label: "Based in", value: "Los Angeles, CA" },
+  { label: "Off hours", value: "Playing & watching basketball · cooking · touring open houses" },
 ];
 
 export const PILLARS = [
   {
     title: "Data Science & analytics",
-    body: "SQL, dbt and Snowflake pipelines, experiment design, regression, and dashboards that answer the question someone actually asked.",
+    body: "SQL and dbt pipelines, experiments, and dashboards that answer the real question.",
   },
   {
     title: "ML & AI",
-    body: "LLM agents, RAG, text-to-SQL, anomaly detection, and NLP. Evaluated against real analyst work, not just demos.",
+    body: "LLM agents, RAG, text-to-SQL, and anomaly detection, tested against real work.",
   },
   {
     title: "Product",
-    body: "Writing PRDs, scoping with stakeholders and researchers, leading teams, and shipping the interface people use every day.",
+    body: "PRDs, scoping with stakeholders, leading teams, and shipping the interface.",
   },
 ];
 
@@ -212,6 +214,7 @@ export const PROJECTS: Project[] = [
     ],
     stack: ["Next.js", "TypeScript", "LangGraph", "Supabase", "Tailwind"],
     image: "/projects/realy-v2.png",
+    links: [{ label: "Live demo", href: "https://table-reasoning.vercel.app/" }],
   },
   {
     id: "tappedin",
@@ -245,7 +248,6 @@ export const PROJECTS: Project[] = [
     stack: ["Python", "YOLOv8", "Gemini", "Flask", "React Native", "Raspberry Pi"],
     image: "/projects/scenetic.png",
     imageKind: "phone",
-    links: [{ label: "Code", href: "https://github.com/kylewxng/scenetic" }],
   },
 ];
 
@@ -258,15 +260,17 @@ export const SIDE_PROJECTS: SideProject[] = [
     stack: ["Python", "XGBoost", "scikit-learn", "Streamlit"],
     year: "2026",
     image: "/projects/hoops.png",
+    href: "https://hoopspredictor.streamlit.app/",
   },
   {
     id: "transfermate",
     title: "TransferMate",
     summary:
-      "Helps California community college students plan transfers to all **9** UCs. Designed a 9-collection Firestore schema for course articulations and major requirements.",
+      "Helps California community college students plan transfers to all **9** UCs, backed by a Firestore schema of course articulations.",
     stack: ["React", "Tailwind", "Firebase", "Figma"],
     year: "2025",
     image: "/projects/transfermate.png",
+    href: "https://transfer-mate.vercel.app/",
   },
   {
     id: "plantpulse",
@@ -288,7 +292,9 @@ export const SKILLS: { group: string; items: string[] }[] = [
   {
     group: "AI & ML",
     items: [
-      "LLM agents (LangGraph, Snowflake Cortex)",
+      "LLM agents",
+      "LangGraph",
+      "Snowflake Cortex",
       "RAG",
       "Text-to-SQL",
       "sentence-transformers",
