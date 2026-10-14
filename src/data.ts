@@ -79,7 +79,6 @@ export const PROFILE: { label: string; value: string }[] = [
   { label: "Most recent", value: "Data Science Intern, Pacific Life" },
   { label: "Works in", value: "Python · SQL · Snowflake · dbt · LangGraph · Next.js" },
   { label: "Based in", value: "Los Angeles, CA" },
-  { label: "Off hours", value: "Playing & watching basketball · cooking · touring open houses" },
 ];
 
 export const PILLARS = [
@@ -339,10 +338,57 @@ export const SKILLS: { group: string; items: string[] }[] = [
   },
 ];
 
+export interface Hobby {
+  id: string;
+  title: string;
+  blurb: string;
+  tags: string[];
+  /** Drop a photo in /public/hobbies and set its path; the line drawing shows until then. */
+  image?: string;
+  /** CSS object-position for the photo crop */
+  imagePosition?: string;
+  alt?: string;
+  art: "court" | "kitchen" | "floorplan";
+}
+
+export const HOBBIES: Hobby[] = [
+  {
+    id: "basketball",
+    title: "Basketball",
+    blurb: "Hooping since I was #5 on the Sabers. These days it’s pickup runs, and it’s the reason Courtex and HoopsPredictor exist.",
+    tags: ["Pickup", "NBA", "Box scores"],
+    image: "/hobbies/basketball.jpg",
+    imagePosition: "center 70%",
+    alt: "Kyle as a kid in a yellow #5 Sabers jersey on an indoor court",
+    art: "court",
+  },
+  {
+    id: "cooking",
+    title: "Cooking",
+    blurb: "Cooking for friends and reworking recipes until they come out right. Pictured: birria tacos.",
+    tags: ["Home cooking", "New recipes"],
+    image: "/hobbies/cooking.jpg",
+    imagePosition: "45% center",
+    alt: "A plate of crispy birria tacos with salsa",
+    art: "kitchen",
+  },
+  {
+    id: "house-tours",
+    title: "House tours",
+    blurb: "Walking open houses around LA for the floor plans, the light, and the design ideas.",
+    tags: ["Open houses", "Architecture", "LA"],
+    image: "/hobbies/house-tour.jpg",
+    imagePosition: "center 60%",
+    alt: "Open kitchen with oak cabinets, a marble island, and glass pendant lights",
+    art: "floorplan",
+  },
+];
+
 export const NAV_SECTIONS = [
   { id: "about", label: "About" },
   { id: "experience", label: "Experience" },
   { id: "projects", label: "Projects" },
   { id: "skills", label: "Skills" },
+  { id: "hobbies", label: "Hobbies" },
   { id: "contact", label: "Contact" },
 ];

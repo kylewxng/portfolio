@@ -2,6 +2,7 @@ import {
   EDUCATION,
   EXPERIENCE,
   HERO_WORDS,
+  HOBBIES,
   METRICS,
   PILLARS,
   PROFILE,
@@ -23,6 +24,7 @@ import LocalTime from "@/components/LocalTime";
 import RotatingWords from "@/components/RotatingWords";
 import Spotlight from "@/components/Spotlight";
 import TechIcon from "@/components/TechIcon";
+import HobbyCard from "@/components/HobbyCard";
 import { ArrowDown, ArrowUpRight, GitHubIcon, LinkedInIcon } from "@/components/icons";
 
 const CONTACT_ROWS = [
@@ -305,10 +307,31 @@ export default function Portfolio() {
           </div>
         </Section>
 
+        {/* ═══════ HOBBIES ═══════ */}
+        <Section
+          id="hobbies"
+          num="05"
+          label="Hobbies"
+          title="Off the clock"
+          intro="What I’m doing when I’m not in a notebook or a SQL editor."
+        >
+          <div className="grid gap-6 md:grid-cols-3">
+            {HOBBIES.map((h, i) => (
+              <Reveal
+                key={h.id}
+                delay={i * 0.08}
+                className={i === 1 ? "h-full md:mt-10" : "h-full"}
+              >
+                <HobbyCard hobby={h} index={i} />
+              </Reveal>
+            ))}
+          </div>
+        </Section>
+
         {/* ═══════ CONTACT ═══════ */}
         <Section
           id="contact"
-          num="05"
+          num="06"
           label="Contact"
           title="Let’s talk"
           intro="I’m open to Product, Data Science, ML/AI, and Analytics roles. Email is the fastest way to reach me."

@@ -168,6 +168,33 @@ body {
   opacity: 1;
 }
 
+/* Blueprint backdrop for hobby cards without a photo */
+.hobby-art {
+  background-image:
+    radial-gradient(60% 55% at 50% 45%, color-mix(in srgb, var(--cf-400) 14%, transparent), transparent 75%),
+    linear-gradient(to right, var(--border) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--border) 1px, transparent 1px);
+  background-size:
+    100% 100%,
+    20px 20px,
+    20px 20px;
+}
+
+@keyframes steam {
+  0%,
+  100% {
+    transform: translateY(0);
+    opacity: 0.25;
+  }
+  50% {
+    transform: translateY(-4px);
+    opacity: 0.8;
+  }
+}
+.steam {
+  animation: steam 2.6s ease-in-out infinite;
+}
+
 /* Rotating hero word */
 @keyframes word-in {
   from {
@@ -211,6 +238,7 @@ body {
   }
   .rise,
   .status-dot,
+  .steam,
   .word-in {
     animation: none;
   }
